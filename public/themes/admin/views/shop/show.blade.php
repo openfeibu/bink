@@ -136,6 +136,7 @@
             autoExtend: true,
             //检索成功的回调函数
             complete : function(results){
+				console.log(results)
                 var pois = results.detail.pois;
                 console.log(results)
                 for(var i = 0,l = pois.length;i < l; i++){
@@ -154,7 +155,11 @@
                     markers.push(marker);
                 }
                 map.fitBounds(latlngBounds);
-            }
+            },
+			//若服务请求失败，则运行以下函数
+			error: function() {
+				alert("无法获取地址，请检查地址是否正确");
+			}
         });
         qq.maps.event.addListener(map,'click',function(event) {
             document.getElementsByName('longitude')[0].value = event.latLng.getLng();
@@ -175,5 +180,6 @@
         clearOverlays(markers);
         // searchService.setPageCapacity(5);
         searchService.search(keyword);//根据中心点坐标、半径和关键字进行周边检索。
+		
     }
 </script>

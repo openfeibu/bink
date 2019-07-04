@@ -11,8 +11,8 @@
             </div>
         </a>
         <div class="mapNav">
-            <div class="distance">20km</div>
-            <div class="mapNav-icon"></div>
+            <div class="distance">{{ $shop['distance'] }}km</div>
+            <div class="mapNav-icon" onClick="openLocation('{{$shop['latitude']}}','{{$shop['longitude']}}','{{ $shop['shop_name'] }}','{{ $shop['address'] }}')"></div>
         </div>
 
     </div>

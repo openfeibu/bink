@@ -1,4 +1,4 @@
-{!! Theme::partial('header') !!}
+@include('header')
 
 <div class="main pb pt">
     <div class="home-btn">

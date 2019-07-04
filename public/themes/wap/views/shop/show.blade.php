@@ -18,11 +18,11 @@
     <div class="shopName">
         <div class="name fb-overflow-1">{{ $shop['shop_name'] }}</div>
         <div class="adress fb-overflow-2">{{ $shop['address'] }}</div>
-        <div class="mapNav-icon"></div>
+        <div class="mapNav-icon"  onClick="openLocation('{{$shop['latitude']}}','{{$shop['longitude']}}','{{ $shop['shop_name'] }}','{{ $shop['address'] }}')"></div>
     </div>
     <div class="info fb-clearfix">
         <div class="info-item info-item1">
-            <p>22km</p>
+            <p>{{ $shop['distance'] }}km</p>
             <span>距离</span>
         </div>
         <div class="info-item info-item2">

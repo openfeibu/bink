@@ -5,10 +5,10 @@
     $(function(){
         $("#searchForm").on("submit", function(e){
             //请求数据搜索接口
-            alert(123)
+            $("#searchForm").submit();
         });
         var shareLinkUlr = location.href.split("#")[0];
-        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':true,'json':false},function(data,status){
+        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':false,'json':false},function(data,status){
             configJsSDK(JSON.parse(data.data.config))
         },'json');
         function configJsSDK(config){
@@ -17,7 +17,6 @@
                 wx.getLocation({
                     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                     success: function (res) {
-						console.log(res)
 						var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                         var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         var speed = res.speed; // 速度，以米/每秒计
@@ -51,16 +50,8 @@
                         
                     }
                 });
-				/*
-                wx.openLocation({
-                    latitude: 0, // 纬度，浮点数，范围为90 ~ -90
-                    longitude: 0, // 经度，浮点数，范围为180 ~ -180。
-                    name: '', // 位置名
-                    address: '', // 地址详情说明
-                    scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
-                    infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-                });
-				*/
+
+				
             })
 
         }
@@ -105,4 +96,15 @@
 
 
     })
+	function openLocation(latitude,longitude,name,address)
+	{
+		wx.openLocation({
+			latitude: parseFloat(latitude), // 纬度，浮点数，范围为90 ~ -90
+			longitude: parseFloat(longitude), // 经度，浮点数，范围为180 ~ -180。
+			name: name, // 位置名
+			address: address, // 地址详情说明
+			scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
+			infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+		});
+	}
 </script>

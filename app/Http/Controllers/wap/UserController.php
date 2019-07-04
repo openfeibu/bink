@@ -36,9 +36,9 @@ class UserController extends BaseController
 			User::where('openid',$user->openid)->update([
 				'latitude' => $latitude,
 				'longitude' => $longitude,
+				'local_city' => $city_name,
 				'city' => $city_name,
 				'city_code' => $city->city_code,
-				'local_city' => $city_name,
 			]);
 		}else{
 			User::where('openid',$user->openid)->update([

@@ -25,7 +25,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['distributor_name', 'desc','created_at', 'updated_at'],
+        'fillable'      => ['distributor_name', 'desc','qrcode_count','created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/distributor',

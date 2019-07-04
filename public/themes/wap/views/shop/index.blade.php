@@ -1,5 +1,5 @@
 
-{!! Theme::partial('header') !!}
+@include('header')
 
 <div class="main pb pt">
     @if(!$shops_data)
