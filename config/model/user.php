@@ -74,16 +74,10 @@ return [
             //'slugs'         => [],
             'dates'         => ['created_at', 'updated_at'],
             'appends'       => [],
-            'fillable'      => ['openid','name', 'avatar',  'city', 'city_code', 'longitude', 'latitude', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'district', 'state', 'country', 'photo', 'web', 'permissions','password', 'remember_token'],
+            'fillable'      => ['openid','name', 'avatar',  'local_city','city', 'city_code', 'longitude', 'latitude', 'email','password', 'remember_token'],
             'translate'     => [],
 
             'upload_folder' => 'user/user',
-            'uploads'       => [
-                'photo' => [
-                    'count' => 1,
-                    'type'  => 'image',
-                ],
-            ],
             'casts'         => [
             ],
             'revision'      => [],
