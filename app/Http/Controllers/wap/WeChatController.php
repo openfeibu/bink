@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Wap;
 use Illuminate\Http\Request;
 
 use Laravel\Socialite\Facades\Socialite;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -17,12 +17,11 @@ class WeChatController extends Controller
 
     public function callback(){
         $user = Socialite::driver('weixin')->user();
-        dd($user);
+
         $check = User::where('openid', $user->id)->first();
         if (!$check) {
             $customer = User::create([
                 'openid' => $user->id,
-                'provider' => 'qq_connect',
                 'name' => $user->nickname,
                 'email' => 'qq_connect+' . $user->id . '@example.com',
                 'password' => bcrypt(Str::random(60)),
@@ -52,7 +51,9 @@ class WeChatController extends Controller
         $config = $app->jssdk->buildConfig($arr,$debug,$json,$url);
 
         return $this->response->message('获取成功')
-            ->data($config)
+            ->data([
+				'config' => $config
+			])
             ->status("success")
             ->code(200)
             ->url(url('/'))
