@@ -52,8 +52,8 @@ class WeChatController extends Controller
 
         return $this->response->message('获取成功')
             ->data([
-				'config' => $config
-			])
+                'config' => $config
+            ])
             ->status("success")
             ->code(200)
             ->url(url('/'))

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,6 +58,12 @@ class Handler extends ExceptionHandler
     private function handle($request,$exception)
     {
         switch ($exception) {
+            case ($exception instanceof \App\Exceptions\OutputServerMessageException):
+                $resposeJson = [
+                    'code' => 400,
+                    'message' => $exception->getMessage(),
+                ];
+                break;
             case ($exception instanceof \App\Exceptions\Roles\PermissionDeniedException):
                 $resposeJson = [
                     'code' => 403,
@@ -69,6 +76,12 @@ class Handler extends ExceptionHandler
                     'code' => 419,
                     'url' => '',
                     'message' => '页面Token 失效，请重新进入',
+                ];
+                break;
+            case ($exception instanceof UnauthorizedHttpException):
+                $resposeJson = [
+                    'code' => 401,
+                    'message' => $exception->getMessage(),
                 ];
                 break;
             default:
