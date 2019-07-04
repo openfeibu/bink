@@ -8,7 +8,7 @@
             alert(123)
         });
         var shareLinkUlr = location.href.split("#")[0];
-        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"onMenuShareTimeline,onMenuShareAppMessage",'url':shareLinkUlr,'debug':true,'json':false},function(data,status){
+        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData",'url':shareLinkUlr,'debug':true,'json':false},function(data,status){
             console.log(data);
             configJsSDK(data.data)
         },'json');
