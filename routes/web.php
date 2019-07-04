@@ -91,6 +91,7 @@ Route::group([
     Route::get('/wechat/callback', 'WeChatController@callback');
     Route::get('/wechat/jssdkconfig', 'WeChatController@getJSSDKConfig');
     Route::get('/','HomeController@home')->name('home');
+	Route::post('/user/saveLocation','UserController@saveLocation');
     Route::get('/shop','ShopController@index')->name('shop.index');
     Route::get('/shop/{shop}','ShopController@show')->name('shop.show');
 

@@ -8,8 +8,7 @@
             alert(123)
         });
         var shareLinkUlr = location.href.split("#")[0];
-        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation",'url':shareLinkUlr,'debug':true,'json':false},function(data,status){
-            console.log(data);
+        $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':true,'json':false},function(data,status){
             configJsSDK(JSON.parse(data.data.config))
         },'json');
         function configJsSDK(config){
@@ -18,17 +17,26 @@
                 wx.getLocation({
                     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                     success: function (res) {
+						console.log(res)
 						var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                         var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         var speed = res.speed; // 速度，以米/每秒计
                         var accuracy = res.accuracy; // 位置精度
 						$.ajax({
-							url : "{{ url('/user/saveLoaction') }}",
-							data : {'latitude':latitude,'longitude':longitude,'_token':"{{ crft_token }}"},
+							url : "{{ url('/user/saveLocation') }}",
+							data : {'latitude':latitude,'longitude':longitude,'_token':"{!! csrf_token() !!}"},
 							type : 'post',
 							dataType : "json",
 							success : function (data) {
-								
+								if(data.code != 200)
+								{
+									var msg = data.msg;
+									$fb.fbNews({content:msg,type:'warning'});
+								}
+								if(data.data.first)
+								{
+									window.location.href="/shop";
+								}
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
 								responseText = $.parseJSON(jqXHR.responseText);
@@ -39,7 +47,7 @@
 								}
 								$fb.fbNews({content:message,type:'warning'});
 							}
-						)}
+						})
                         
                     }
                 });

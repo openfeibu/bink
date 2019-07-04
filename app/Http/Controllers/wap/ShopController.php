@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Route,Auth;
 use App\Http\Controllers\Wap\Controller as BaseController;
 use App\Models\Shop;
+use App\Models\User;
+use App\Models\City;
 
 class ShopController extends BaseController
 {
@@ -21,7 +23,12 @@ class ShopController extends BaseController
      */
     public function index(Request $request)
     {
-        $city_code = $request->input('city_code','');
+        $city_code = $request->input('city_code',Auth::user()->city_code);
+		$city = City::where('city_code',$city_code)->first();
+		User::where('openid',Auth::user()->openid)->update([
+			'city_code' =>$city_code,
+			'city' => $city->name,
+		]);
         $shops = Shop::when($city_code,function ($query) use ($city_code) {
             return $query->where('city_code', $city_code);
         })
@@ -48,7 +55,7 @@ class ShopController extends BaseController
                 ->output();
         }
         return $this->response->title('门店')
-            ->data(compact('shops_data'))
+            ->data(compact('shops_data','city'))
             ->view('shop.index')
             ->output();
     }

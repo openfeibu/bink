@@ -61,27 +61,27 @@ class Handler extends ExceptionHandler
             case ($exception instanceof \App\Exceptions\OutputServerMessageException):
                 $resposeJson = [
                     'code' => 400,
-                    'message' => $exception->getMessage(),
+                    'msg' => $exception->getMessage(),
                 ];
                 break;
             case ($exception instanceof \App\Exceptions\Roles\PermissionDeniedException):
                 $resposeJson = [
                     'code' => 403,
                     'url' => '',
-                    'message' => $exception->getMessage(),
+                    'msg' => $exception->getMessage(),
                 ];
                 break;
             case ($exception instanceof \Illuminate\Session\TokenMismatchException):
                 $resposeJson = [
                     'code' => 419,
                     'url' => '',
-                    'message' => '页面Token 失效，请重新进入',
+                    'msg' => '页面Token 失效，请重新进入',
                 ];
                 break;
             case ($exception instanceof UnauthorizedHttpException):
                 $resposeJson = [
                     'code' => 401,
-                    'message' => $exception->getMessage(),
+                    'msg' => $exception->getMessage(),
                 ];
                 break;
             default:
@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
         }
         if ($request->ajax())
         {
-            return $resposeJson;
+            return response()->json($resposeJson);
         }else{
             return response()->view('message.error',$resposeJson);
         }
