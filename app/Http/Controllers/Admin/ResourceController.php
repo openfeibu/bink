@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\City;
+use App\Models\Distributor;
+use App\Models\Shop;
+use App\Models\User;
 use Route;
 use App\Http\Controllers\Admin\Controller as BaseController;
 use App\Traits\AdminUser\AdminUserPages;
@@ -33,7 +36,12 @@ class ResourceController extends BaseController
      */
     public function home()
     {
+        $today_user_count = User::where('created_at','>',date('Y-m-d 00:00:00'))->count();
+        $user_count = User::count();
+        $shop_count = Shop::count();
+        $distributor_count = Distributor::count();
         return $this->response->title(trans('app.name'))
+            ->data(compact('user_count','shop_count','distributor_count','today_user_count'))
             ->view('home')
             ->output();
     }
