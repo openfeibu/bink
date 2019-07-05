@@ -46,8 +46,8 @@
             ,cols: [[
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
-                ,{field:'name',title:'{!! trans('user.label.name')!!}',edit:'text'}
-                ,{field:'local_city',title:'{!! trans('user.label.local_city')!!}',edit:'text'}
+                ,{field:'name',title:'{!! trans('user.label.name')!!}'}
+                ,{field:'local_city',title:'{!! trans('user.label.local_city')!!}'}
                 ,{field:'avatar',title:'{!! trans('user.label.avatar_url')!!}',toolbar:'#imageTEM'}
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
