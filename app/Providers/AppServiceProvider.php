@@ -54,6 +54,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Eloquent\DistributorRepository::class
         );
         $this->app->bind(
+            'App\Repositories\Eloquent\UserRepositoryInterface',
+            \App\Repositories\Eloquent\UserRepository::class
+        );
+        $this->app->bind(
             'App\Repositories\Eloquent\CityRepositoryInterface',
             \App\Repositories\Eloquent\CityRepository::class
         );

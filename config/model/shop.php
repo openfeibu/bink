@@ -25,7 +25,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['shop_name','image', 'images','address', 'city_code', 'city_name', 'opening_time', 'closing_time', 'content', 'longitude', 'latitude', 'created_at', 'updated_at'],
+        'fillable'      => ['shop_name','image', 'images','address', 'city_code', 'city_name', 'opening_time', 'closing_time', 'content', 'longitude', 'latitude','view_count', 'created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/shop',

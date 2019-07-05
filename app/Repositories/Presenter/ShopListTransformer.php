@@ -20,6 +20,7 @@ class ShopListTransformer extends TransformerAbstract
             'longitude'         => $shop->longitude,
             'latitude'          => $shop->latitude,
             'business_time'     => date('H:i',strtotime($shop['opening_time'])).' - '. date('H:i',strtotime($shop['closing_time'])) ,
+            'view_count' => $shop->view_count,
             'created_at'        => format_date($shop->created_at),
             'updated_at'        => format_date($shop->updated_at),
         ];

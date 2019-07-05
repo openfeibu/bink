@@ -14,6 +14,7 @@ class DistributorListTransformer extends TransformerAbstract
             'id'                => $distributor->id,
             'distributor_name'  => $distributor->distributor_name,
             'desc'              => $distributor->desc,
+            'qrcode_count' => $distributor->qrcode_count,
             'qrcode'            => app(Distributor::class)->generateQrcode($distributor->id,$distributor->distributor_name),
             'created_at'        => format_date($distributor->created_at),
             'updated_at'        => format_date($distributor->updated_at),

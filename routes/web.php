@@ -60,6 +60,9 @@ Route::group([
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
 
+    Route::resource('user', 'UserResourceController');
+    Route::post('/user/destroyAll', 'UserResourceController@destroyAll')->name('user.destroy_all');
+
     Route::resource('admin_user', 'AdminUserResourceController');
     Route::post('/admin_user/destroyAll', 'AdminUserResourceController@destroyAll')->name('admin_user.destroy_all');
     Route::resource('permission', 'PermissionResourceController');

@@ -13,5 +13,6 @@ return [
         'longitude' =>  '经度',
         'latitude' => '纬度',
         'business_time' => '营业时间',
+        'view_count' => '浏览数',
     ],
 ];
