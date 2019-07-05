@@ -23,18 +23,18 @@
 
                             @foreach($shop_tree as $province_key => $province)
 								<div class="provinceBox">
-									<input type="checkbox"  name="{{ $province['name'] }}" title="{{ $province['name'] }}">
-								   
+									<input type="checkbox"  name="{{ $province['name'] }}" title="{{ $province['name'] }}" lay-filter="province">
 									@foreach($province['cities'] as $city_key => $city)
 										<div class="cityBox">
-											<input type="checkbox" lay-skin="primary" title="{{ $city['name'] }}">
-										</div>
-										<div class="shopBox">
-										@foreach($city['shops'] as $shop_key => $shop)
+											<input type="checkbox" lay-skin="primary" title="{{ $city['name'] }}" lay-filter="city">
 										
-											<input type="checkbox" lay-skin="primary" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" @if(in_array($shop["id"],$distributor_shop_ids)) checked @endif>
-										
-										@endforeach
+											<div class="shopBox">
+											@foreach($city['shops'] as $shop_key => $shop)
+											
+												<input type="checkbox" lay-skin="primary" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" @if(in_array($shop["id"],$distributor_shop_ids)) checked @endif>
+											
+											@endforeach
+											</div>
 										</div>
 									@endforeach
 								</div>
@@ -55,12 +55,28 @@
     </div>
 </div>
 <script>
-layui.use('form', function(){
+layui.use(['jquery','element','table'], function(){
   var form = layui.form;
-  form.on('checkbox', function(data){
-	  console.log(data.elem); //得到select原始DOM对象
-	  console.log(data.value); //得到被选中的值
-	  console.log(data.othis); //得到美化后的DOM对象
+  var $ = layui.$;
+  form.on('checkbox(province)', function(data){
+
+	  if(data.elem.checked){
+		
+			$(this).parents('.provinceBox').find('input').prop('checked', true);
+		}else{
+			$(this).parents('.provinceBox').find('input').prop('checked', false);
+		}
+		form.render();
+	});
+	 form.on('checkbox(city)', function(data){
+	console.log(123)
+	  if(data.elem.checked){
+		
+			$(this).parents('.cityBox').find('input').prop('checked', true);
+		}else{
+			$(this).parents('.cityBox').find('input').prop('checked', false);
+		}
+		form.render();
 	});
   //各种基于事件的操作，下面会有进一步介绍
 });
