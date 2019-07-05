@@ -33,14 +33,15 @@
 									$fb.fbNews({content:msg,type:'warning'});
 								}
 								@if(isset($skip) && $skip)
-								if(data.data.first)
-								{
+
+//								if(data.data.first)
+//								{
 								    @if(isset($distributor_id) && $distributor_id)
                                             window.location.href="/shop?distributor_id={{ $distributor_id }}";
                                     @else
 									    window.location.href="/shop";
                                     @endif
-								}
+//								}
 								@endif
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
