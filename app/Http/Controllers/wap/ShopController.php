@@ -85,7 +85,8 @@ class ShopController extends BaseController
 		$longitude = Auth::user()->longitude;
         $shop->images = explode(',',$shop->images);
 		$shop->distance = $latitude ? get_distance([$longitude,$latitude],[$shop['longitude'],$shop['latitude']]) : '未知';
-		
+
+        Shop::where('id',$shop->id)->increment('view_count');
         return $this->response->title('门店')
             ->data(compact('shop'))
             ->view('shop.show')
