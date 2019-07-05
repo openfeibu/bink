@@ -75,7 +75,7 @@ body{background: #f5f5f5;}
 .layui-form-set .layui-input-block{margin-left: 130px;}
 .fb-main-table{background: #fff;padding: 15px;}
 
-#map{height: 500px;}
+#map{height: 300px;}
 .layui-button-mapsearch{    display: inline-block;
     height: 38px;
     line-height: 38px;
@@ -176,8 +176,29 @@ button.layui-close{
     height: 200px;
 }
 
-
-
-
-
+.shopAccout img{
+	width:120px !important;
+	height:120px !important;
+}
+.shopAccout .layui-upload-drag{
+	width:120px !important;
+	height:120px !important;
+	padding:0 !important;
+}
+.shopBanner .file-iteme img{
+	width:250px !important;
+	height:125px !important;
+}
+.laydate-time-list>li{
+	width:50% !important
+}
+.laydate-time-list>li:last-child{
+	display:none;
+}
+.shopBox{
+	padding-left:30px;
+}
+.provinceBox{
+margin-bottom:20px;
+}
 

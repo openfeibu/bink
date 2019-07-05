@@ -1,4 +1,4 @@
-
+@include('wx')
 <div class="main pb ">
     <div class="return">
         <a href="javascript:history.go(-1)"></a>
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-
+@include('footer')
 <script>
     $(function(){
 

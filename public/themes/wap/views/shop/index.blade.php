@@ -1,4 +1,4 @@
-
+@include('wx')
 @include('header')
 
 <div class="main pb pt">
@@ -15,7 +15,7 @@
 </div>
 
 @include('city')
-
+@include('footer')
 <script>
     $(function(){
         var page = 1 ;

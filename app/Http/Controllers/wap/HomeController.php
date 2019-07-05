@@ -24,11 +24,11 @@ class HomeController extends BaseController
     {
 		//$city = City::where('city_code',Auth::user()->city_code)->first();
 		//$city = $city ? $city->toArray() : [];
-        $skip = $request->input('skip',true);
+        $skip = $request->input('skip',1);
         $distributor_id = $request->input('distributor_id','');
         if($distributor_id)
         {
-            $skip = true;
+            $skip = 1;
         }
         return $this->response->title('首页')
             ->data(compact('skip','distributor_id'))

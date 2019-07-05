@@ -18,19 +18,26 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">{{ trans('distributor.label.distributor_name') }}</label>
+                        <label class="layui-form-label">{{ trans('shop.name') }}</label>
                         <div class="layui-input-block">
 
                             @foreach($shop_tree as $province_key => $province)
-                                <br>
-                                <input type="checkbox" title="{{ $province['name'] }}">
-                                <br>
-                                @foreach($province['cities'] as $city_key => $city)
-                                    <br><input type="checkbox" title="{{ $city['name'] }}"><br>
-                                    @foreach($city['shops'] as $shop_key => $shop)
-                                        <input type="checkbox" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" @if(in_array($shop["id"],$distributor_shop_ids)) checked @endif>
-                                    @endforeach
-                                @endforeach
+								<div class="provinceBox">
+									<input type="checkbox"  name="{{ $province['name'] }}" title="{{ $province['name'] }}">
+								   
+									@foreach($province['cities'] as $city_key => $city)
+										<div class="cityBox">
+											<input type="checkbox" lay-skin="primary" title="{{ $city['name'] }}">
+										</div>
+										<div class="shopBox">
+										@foreach($city['shops'] as $shop_key => $shop)
+										
+											<input type="checkbox" lay-skin="primary" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" @if(in_array($shop["id"],$distributor_shop_ids)) checked @endif>
+										
+										@endforeach
+										</div>
+									@endforeach
+								</div>
                             @endforeach
                         </div>
                     </div>
@@ -47,3 +54,15 @@
         </div>
     </div>
 </div>
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  form.on('checkbox', function(data){
+	  console.log(data.elem); //得到select原始DOM对象
+	  console.log(data.value); //得到被选中的值
+	  console.log(data.othis); //得到美化后的DOM对象
+	});
+  //各种基于事件的操作，下面会有进一步介绍
+});
+    
+</script>

@@ -1,3 +1,4 @@
+@include('wx')
 @include('header')
 
 <div class="main pb pt">
@@ -19,3 +20,4 @@
 </div>
 
 @include('city')
+@include('footer')

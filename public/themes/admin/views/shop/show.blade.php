@@ -28,15 +28,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">图片</label>
+                    <div class="layui-form-item shopAccout">
+                        <label class="layui-form-label">店铺头像（100*100）</label>
                         {!! $shop->files('image')
                         ->url($shop->getUploadUrl('image'))
                         ->uploader()!!}
                     </div>
 
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">轮播图</label>
+                    <div class="layui-form-item shopBanner">
+                        <label class="layui-form-label">轮播图(750*375)</label>
                         {!! $shop->files('images',true)
                         ->url($shop->getUploadUrl('images'))
                         ->uploaders()!!}
@@ -64,12 +64,12 @@
                             <input type="button" value="搜索" class="layui-button-mapsearch"  onclick="searchKeyword()">
                             <div class="layui-form-mid layui-word-aux">点击地图快速获取经纬度</div>
                         </div>
-
+						
                         <div id="map"></div>
                     </div>
 
                     <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">内容</label>
+                        <label class="layui-form-label">店铺详情</label>
                         <div class="layui-input-block">
                             <script type="text/plain" id="content" name="content" style="width:1000px;height:240px;">{!! $shop['content'] !!}</script>
                         </div>
@@ -108,53 +108,33 @@
     });
 </script>
 <script>
-    var searchService,map,markers = [];
+    var geocoder,map,markers = [];
     var init = function() {
         var center = new qq.maps.LatLng(23.15641,113.3318);
         map = new qq.maps.Map(document.getElementById('map'),{
             center: center,
-            zoom: 13
+            zoom: 15
         });
-        //设置圆形
-        // new qq.maps.Circle({
-        //     center:new qq.maps.LatLng(39.936273,116.44004334),
-        //     radius: 2000,
-        //     map: map
-        // });
-        var latlngBounds = new qq.maps.LatLngBounds();
+      
         //调用Poi检索类
-        searchService = new qq.maps.SearchService({
-            //设置搜索范围为北京
-            location: "广州",
-            //设置搜索页码为1
-            pageIndex: 1,
-            //设置每页的结果数为5
-            pageCapacity: 5,
-            //设置展现查询结构到infoDIV上
-            panel: document.getElementById('infoDiv'),
-            //设置动扩大检索区域。默认值true，会自动检索指定城市以外区域。
-            autoExtend: true,
-            //检索成功的回调函数
-            complete : function(results){
-				console.log(results)
-                var pois = results.detail.pois;
-                console.log(results)
-                for(var i = 0,l = pois.length;i < l; i++){
-                    var poi = pois[i];
-                    latlngBounds.extend(poi.latLng);
-                    var marker = new qq.maps.Marker({
-                        map:map,
-                        position: poi.latLng
-                    });
-
-                    marker.setTitle(i+1);
-                    qq.maps.event.addListener(marker,'click',function(event) {
-                        document.getElementsByName('longitude')[0].value = event.latLng.getLng();
-                        document.getElementsByName('latitude')[0].value = event.latLng.getLat();
-                    })
-                    markers.push(marker);
-                }
-                map.fitBounds(latlngBounds);
+        geocoder = new qq.maps.Geocoder({
+            
+            complete : function(result){
+				console.log(result)
+				map.setCenter(result.detail.location);
+				var marker = new qq.maps.Marker({
+					map:map,
+					position: result.detail.location
+				});
+				document.getElementsByName('longitude')[0].value = result.detail.location.lng;
+				document.getElementsByName('latitude')[0].value = result.detail.location.lat;
+				markers.push(marker)
+				qq.maps.event.addListener(marker,'click',function(event) {
+					document.getElementsByName('longitude')[0].value = event.latLng.getLng();
+					document.getElementsByName('latitude')[0].value = event.latLng.getLat();
+				})
+                
+               
             },
 			//若服务请求失败，则运行以下函数
 			error: function() {
@@ -176,10 +156,11 @@
     //调用poi类信接口
     function searchKeyword() {
         var keyword = document.getElementById("keyword").value;
-        region = new qq.maps.LatLng(39.936273,116.44004334);
+        //region = new qq.maps.LatLng(39.936273,116.44004334);
         clearOverlays(markers);
+		
         // searchService.setPageCapacity(5);
-        searchService.search(keyword);//根据中心点坐标、半径和关键字进行周边检索。
+        geocoder.getLocation(keyword);//根据中心点坐标、半径和关键字进行周边检索。
 		
     }
 </script>
