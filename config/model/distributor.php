@@ -38,6 +38,29 @@ return [
             'distributor_name'        => 'like',
         ],
     ],
+    'distributor_shop'     => [
+        'model'         => \App\Models\DistributorShop::class,
+        'table'         => 'distributor_shops',
+        //'presenter'     => \Litepie\User\Repositories\Presenter\UserPresenter::class,
+        'hidden'        => [],
+        'visible'       => [],
+        'guarded'       => ['*'],
+        'slugs'         => [],
+        'dates'         => [],
+        'appends'       => [],
+        'fillable'      => ['distributor_id', 'shop_id'],
+        'translate'     => [],
+
+        'upload_folder' => '/distributor',
+        'casts'         => [
+
+        ],
+        'revision'      => [],
+        'perPage'       => '20',
+        'search'        => [
+            'distributor_name'        => 'like',
+        ],
+    ],
     'distributor_city'     => [
         'model'         => \App\Models\DistributorCity::class,
         'table'         => 'distributor_cities',

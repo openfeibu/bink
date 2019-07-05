@@ -18,10 +18,18 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">{{ trans('distributor.label.distributor_name') }}</label>
+                        <label class="layui-form-label">{{ trans('shop.name') }}</label>
                         <div class="layui-input-block">
-                            @foreach(app('city_repository')->getCities() as $key => $city)
-                                <input type="checkbox" name="city_code[]" title="{{ $city['name'] }}" value="{{ $city['city_code'] }}">
+                            @foreach($shop_tree as $province_key => $province)
+                                <br>
+                                <input type="checkbox" title="{{ $province['name'] }}">
+                                <br>
+                                @foreach($province['cities'] as $city_key => $city)
+                                    <br><input type="checkbox" title="{{ $city['name'] }}"><br>
+                                    @foreach($city['shops'] as $shop_key => $shop)
+                                        <input type="checkbox" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}">
+                                    @endforeach
+                                @endforeach
                             @endforeach
                         </div>
                     </div>

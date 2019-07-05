@@ -10,27 +10,18 @@
         <div class="layui-col-md12">
             {!! Theme::partial('message') !!}
             <div class="fb-main-table">
-                <form class="layui-form" action="{{guard_url('distributor/'.$distributor->id)}}" method="POST" lay-filter="fb-form">
+                <form class="layui-form" action="{{guard_url('distributor')}}" method="POST" lay-filter="fb-form">
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('distributor.label.distributor_name') }}</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="distributor_name" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('distributor.label.distributor_name') }}" class="layui-input" value="{{ $distributor['distributor_name'] }}" >
+                            <input type="text" name="distributor_name" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('distributor.label.distributor_name') }}" class="layui-input" >
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('distributor.label.distributor_name') }}</label>
                         <div class="layui-input-block">
-
-                            @foreach($shop_tree as $province_key => $province)
-                                <br>
-                                <input type="checkbox" title="{{ $province['name'] }}">
-                                <br>
-                                @foreach($province['cities'] as $city_key => $city)
-                                    <br><input type="checkbox" title="{{ $city['name'] }}"><br>
-                                    @foreach($city['shops'] as $shop_key => $shop)
-                                        <input type="checkbox" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" @if(in_array($shop["id"],$distributor_shop_ids)) checked @endif>
-                                    @endforeach
-                                @endforeach
+                            @foreach(app('city_repository')->getCities() as $key => $city)
+                                <input type="checkbox" name="city_code[]" title="{{ $city['name'] }}" value="{{ $city['city_code'] }}">
                             @endforeach
                         </div>
                     </div>
@@ -40,7 +31,6 @@
                         </div>
                     </div>
                     {!!Form::token()!!}
-                    <input type="hidden" name="_method" value="PUT">
                 </form>
             </div>
 

@@ -1,34 +1,29 @@
 <?php
-
+###
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Admin\ResourceController as BaseController;
 use App\Models\City;
 use App\Models\Distributor;
 use App\Models\DistributorCity;
-use App\Models\DistributorShop;
 use App\Repositories\Eloquent\DistributorRepositoryInterface;
-use App\Repositories\Eloquent\ShopRepositoryInterface;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
 
 /**
  * Resource controller class for page.
  */
-class DistributorResourceController extends BaseController
+class DistributorResourceControllerN extends BaseController
 {
     /**
      * Initialize page resource controller.
      *
      * @param type DistributorRepositoryInterface $distributor
-     * @param type ShopRepositoryInterface $shop_repository
      *
      */
-    public function __construct(DistributorRepositoryInterface $distributor,ShopRepositoryInterface $shop_repository)
+    public function __construct(DistributorRepositoryInterface $distributor)
     {
         parent::__construct();
         $this->repository = $distributor;
-        $this->shop_repository = $shop_repository;
         $this->repository
             ->pushCriteria(\App\Repositories\Criteria\RequestCriteria::class);
     }
@@ -56,11 +51,9 @@ class DistributorResourceController extends BaseController
     {
         $distributor = $this->repository->newInstance([]);
 
-        $shop_tree = $this->shop_repository->getShopTree();
-
         return $this->response->title(trans('app.name'))
             ->view('distributor.create')
-            ->data(compact('distributor','shop_tree'))
+            ->data(compact('distributor'))
             ->output();
     }
     public function store(Request $request)
@@ -68,21 +61,21 @@ class DistributorResourceController extends BaseController
         try {
             $attributes = $request->all();
 
-            $shop_ids = $attributes['shop_id'];
+            $city_codes = $attributes['city_code'];
             $data = [
                 'distributor_name' => trim($attributes['distributor_name']),
             ];
             $distributor = $this->repository->create($data);
 
-            $distributor_shop_data = [];
-            foreach ($shop_ids as $shop_id)
+            $distributor_city_data = [];
+            foreach ($city_codes as $city_code)
             {
-                $distributor_shop_data[] = [
-                    'shop_id' => $shop_id,
+                $distributor_city_data[] = [
+                    'city_code' => $city_code,
                     'distributor_id' => $distributor->id
                 ];
             }
-            DistributorShop::insert($distributor_shop_data);
+            DistributorCity::insert($distributor_city_data);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('distributor.name')]))
                 ->code(0)
@@ -104,13 +97,10 @@ class DistributorResourceController extends BaseController
         } else {
             $view = 'distributor.new';
         }
-        //$distributor_city_codes = DistributorCity::where('distributor_id',$distributor->id)->pluck('city_code')->toArray();
-        $distributor_shop_ids = DistributorShop::where('distributor_id',$distributor->id)->pluck('shop_id')->toArray();
-
-        $shop_tree = $this->shop_repository->getShopTree();
+        $distributor_city_codes = DistributorCity::where('distributor_id',$distributor->id)->pluck('city_code')->toArray();
 
         return $this->response->title(trans('app.view') . ' ' . trans('distributor.name'))
-            ->data(compact('distributor','distributor_shop_ids','shop_tree'))
+            ->data(compact('distributor','distributor_city_codes'))
             ->view($view)
             ->output();
     }
@@ -119,18 +109,18 @@ class DistributorResourceController extends BaseController
         try {
             $attributes = $request->all();
 
-            $shop_ids = $attributes['shop_id'];
+            $city_codes = $attributes['city_code'];
 
-            DistributorShop::where('distributor_id',$distributor->id)->whereNotIn('shop_id',$shop_ids)->delete();
+            DistributorCity::where('distributor_id',$distributor->id)->whereNotIn('city_code',$city_codes)->delete();
 
-            foreach ($shop_ids as $shop_id)
+            foreach ($city_codes as $city_code)
             {
-                $distributor_shop =  DistributorShop::where('distributor_id',$distributor->id)->where('shop_id',$shop_id)->first();
-                if(!$distributor_shop)
+                $distributor_city =  DistributorCity::where('distributor_id',$distributor->id)->where('city_code',$city_code)->first();
+                if(!$distributor_city)
                 {
-                    DistributorShop::create([
+                    DistributorCity::create([
                         'distributor_id' => $distributor->id,
-                        'shop_id' => $shop_id,
+                        'city_code' => $city_code,
                     ]);
                 }
             }
