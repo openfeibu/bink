@@ -32,10 +32,16 @@
 									var msg = data.msg;
 									$fb.fbNews({content:msg,type:'warning'});
 								}
+								@if(isset($skip) && $skip)
 								if(data.data.first)
 								{
-									window.location.href="/shop";
+								    @if(isset($distributor_id) && $distributor_id)
+                                            window.location.href="/shop?distributor_id={{ $distributor_id }}";
+                                    @else
+									    window.location.href="/shop";
+                                    @endif
 								}
+								@endif
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
 								responseText = $.parseJSON(jqXHR.responseText);

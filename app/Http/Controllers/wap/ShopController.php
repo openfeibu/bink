@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Wap;
 
+use App\Models\DistributorShop;
 use Illuminate\Http\Request;
 use Route,Auth;
 use App\Http\Controllers\Wap\Controller as BaseController;
@@ -26,7 +27,8 @@ class ShopController extends BaseController
     {
 		$search_key = $request->input('search_key','');
 		$distributor_id = $request->input('distributor_id','');
-		
+		$distributor_shop_ids = DistributorShop::where('distributor_id',$distributor_id)->pluck('shop_id')->toArray();
+
         $city_code = $request->input('city_code',Auth::user()->city_code);
 		$city = City::where('city_code',$city_code)->first()->toArray();
 		User::where('openid',Auth::user()->openid)->update([
@@ -37,8 +39,8 @@ class ShopController extends BaseController
             return $query->where('city_code', $city_code);
         })->when($search_key,function ($query) use ($search_key) {
             return $query->where('shop_name', 'like','%'.$search_key.'%');
-        })->when($distributor_id,function ($query) use ($search_key) {
-            return $query->where('distributor_id', $distributor_id);
+        })->when($distributor_shop_ids,function ($query) use ($distributor_shop_ids) {
+            return $query->whereIn('id', $distributor_shop_ids);
         })
         ->orderBy('id','desc')
         ->paginate(20);

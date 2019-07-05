@@ -20,11 +20,18 @@ class HomeController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    public function home(Request $request)
     {
 		//$city = City::where('city_code',Auth::user()->city_code)->first();
 		//$city = $city ? $city->toArray() : [];
+        $skip = $request->input('skip',true);
+        $distributor_id = $request->input('distributor_id','');
+        if($distributor_id)
+        {
+            $skip = true;
+        }
         return $this->response->title('首页')
+            ->data(compact('skip','distributor_id'))
             ->view('home')
             ->output();
     }
