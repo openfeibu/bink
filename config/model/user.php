@@ -74,7 +74,7 @@ return [
             //'slugs'         => [],
             'dates'         => ['created_at', 'updated_at'],
             'appends'       => [],
-            'fillable'      => ['openid','name', 'avatar',  'local_city','city', 'city_code', 'longitude', 'latitude', 'email','password', 'remember_token'],
+            'fillable'      => ['openid','name', 'avatar',  'local_city','city', 'city_code', 'longitude', 'latitude', 'local_city_code','distributor_id','email','password', 'remember_token'],
             'translate'     => [],
 
             'upload_folder' => 'user/user',

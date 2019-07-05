@@ -37,6 +37,7 @@ class UserController extends BaseController
 				'latitude' => $latitude,
 				'longitude' => $longitude,
 				'local_city' => $city_name,
+                'local_city_code' => $city->city_code,
 				'city' => $city_name,
 				'city_code' => $city->city_code,
 			]);
@@ -45,6 +46,7 @@ class UserController extends BaseController
 				'latitude' => $latitude,
 				'longitude' => $longitude,
 				'local_city' => $city_name,
+                'local_city_code' => $city->city_code,
 			]);
 		}
 		
