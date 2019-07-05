@@ -33,13 +33,13 @@
                                     <input type="checkbox" name="permissions[]" value="{{ $father->id }}" class="top-permission-checkbox" lay-skin="primary" title="{{ $father->name }}" lay-filter="top-permission-checkbox">
                                 </div>
                                 <div class="sub-permissions layui-col-md9 layui-col-md-offset1">
-                                @if(isset($father->sub))
-                                    @foreach($father->sub as $key => $item)
-                                        <div class="layui-col-sm3">
-                                            <input type="checkbox" name="permissions[]" value="{{ $item->id }}" class="sub-permission-checkbox" lay-skin="primary" title="{{ $item->name }}" lay-filter="sub-permission-checkbox">
-                                        </div>
-                                    @endforeach
-                                @endif
+                                    @if(isset($father->sub))
+                                        @foreach($father->sub as $key => $item)
+                                            <div class="layui-col-sm3">
+                                                <input type="checkbox" name="permissions[]" value="{{ $item->id }}" class="sub-permission-checkbox" lay-skin="primary" title="{{ $item->name }}" lay-filter="sub-permission-checkbox">
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             @endforeach
                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Wap;
 
+use App\Models\Distributor;
 use App\Models\DistributorShop;
 use Illuminate\Http\Request;
 use Route,Auth;
@@ -28,7 +29,10 @@ class ShopController extends BaseController
 		$search_key = $request->input('search_key','');
 		$distributor_id = $request->input('distributor_id','');
 		$distributor_shop_ids = DistributorShop::where('distributor_id',$distributor_id)->pluck('shop_id')->toArray();
-
+        if($distributor_id)
+        {
+            Distributor::where('id',$distributor_id)->increment('qrcode_count');
+        }
         $city_code = $request->input('city_code',Auth::user()->city_code);
 		$city = City::where('city_code',$city_code)->first()->toArray();
 		User::where('openid',Auth::user()->openid)->update([
