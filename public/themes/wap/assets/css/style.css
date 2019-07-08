@@ -354,7 +354,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .copy{
     position: fixed;
     width: 100%;
-    bottom: 0.2rem;
+    bottom: 0.1rem;
     text-align: center;
     font-size: 0.22rem;
     color: #999;
@@ -542,4 +542,26 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .noShop span{
   margin-top: 0.2rem;
   display: block;
+}
+.zbtn{
+	 position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    font-size: 0.32rem;
+    color: #fff;
+    line-height: 0.96rem;
+	height:0.96rem;
+	background:#ec6300;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    margin:0 auto;
+	z-index:10;
+	background: #ec6300 url(../images/zs.png) no-repeat 40% center / 0.6rem auto;
+}
+.zbtn a{
+	color:#fff;
+	display:block;
+	text-indent:0.5rem;
 }

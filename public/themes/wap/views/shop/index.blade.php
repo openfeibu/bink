@@ -13,7 +13,9 @@
     </div>
     @endif
 </div>
-
+<div class="zbtn">
+	<a href="{{ url('/?skip=0') }}">招商加盟</a>
+</div>
 @include('city')
 @include('footer')
 <script>

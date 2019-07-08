@@ -32,9 +32,14 @@
         $('.city-box .content').on('click', 'li',  function(e){
             //alert(e.target.innerHTML)
             var city_code =  $(e.target).attr('city_code');
-            window.location.href="{{ url('/shop') }}?city_code="+city_code;
+            
             $('.city-box').slideUp(500);
+			$('.area-box').slideUp(500);
             $('.masker').addClass('hidden');
+			setTimeout(function(){
+				window.location.href="{{ url('/shop') }}?city_code="+city_code;	
+			},500)
+			
         })
         $('.city-sidaber').on('click',function(e){
             var value = e.target.innerHTML;
