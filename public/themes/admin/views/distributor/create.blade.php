@@ -20,17 +20,26 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('shop.name') }}</label>
                         <div class="layui-input-block">
+
                             @foreach($shop_tree as $province_key => $province)
-                                <br>
-                                <input type="checkbox" title="{{ $province['name'] }}">
-                                <br>
-                                @foreach($province['cities'] as $city_key => $city)
-                                    <br><input type="checkbox" title="{{ $city['name'] }}"><br>
-                                    @foreach($city['shops'] as $shop_key => $shop)
-                                        <input type="checkbox" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}">
+                                <div class="provinceBox">
+                                    <input type="checkbox"  name="{{ $province['name'] }}" title="{{ $province['name'] }}" lay-filter="province">
+                                    @foreach($province['cities'] as $city_key => $city)
+                                        <div class="cityBox">
+                                            <input type="checkbox" class="cityBox-input" lay-skin="primary" title="{{ $city['name'] }}" lay-filter="city">
+
+                                            <div class="shopBox">
+                                                @foreach($city['shops'] as $shop_key => $shop)
+
+                                                    <input type="checkbox" lay-filter="shop" lay-skin="primary" name="shop_id[]" title="{{ $shop['shop_name'] }}" value="{{ $shop['id'] }}" >
+
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     @endforeach
-                                @endforeach
+                                </div>
                             @endforeach
+
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -45,3 +54,60 @@
         </div>
     </div>
 </div>
+<script>
+    layui.use(['jquery','element','table'], function(){
+        var form = layui.form;
+        var $ = layui.$;
+        form.on('checkbox(province)', function(data){
+
+            if(data.elem.checked){
+
+                $(this).parents('.provinceBox').find('input').prop('checked', true);
+            }else{
+                $(this).parents('.provinceBox').find('input').prop('checked', false);
+            }
+            form.render();
+        });
+        form.on('checkbox(city)', function(data){
+            var parents = $(this).parents(".provinceBox")
+            var length = parents.find(".cityBox-input").length;
+            var num = 0;
+            $.each(parents.find(".cityBox-input"),function(k,v){
+                if(v.checked){
+                    num++
+                }
+            })
+            if(num == length){
+                $(this).parents(".provinceBox").find('input').eq(0).prop('checked', true)
+            }else if(num == 0){
+                $(this).parents(".provinceBox").find('input').eq(0).prop('checked', false)
+            }
+
+            if(data.elem.checked){
+                $(this).parents('.cityBox').find('input').prop('checked', true);
+            }else{
+                $(this).parents('.cityBox').find('input').prop('checked', false);
+            }
+            form.render();
+        });
+        form.on('checkbox(shop)', function(data){
+            var parents = $(this).parents(".shopBox")
+            var length = parents.find("input").length;
+            var num = 0;
+            $.each(parents.find("input[type='checkbox']"),function(k,v){
+                if(v.checked){
+                    num++
+                }
+            })
+            if(num == length){
+                $(this).parents(".cityBox").find('input').eq(0).prop('checked', true)
+            }else if(num == 0){
+                $(this).parents(".cityBox").find('input').eq(0).prop('checked', false)
+            }
+
+            form.render();
+        });
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+</script>
