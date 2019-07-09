@@ -50,9 +50,12 @@
                 ,{field:'business_time',title:'{{ trans('shop.label.business_time') }}'}
                 ,{field:'city_name',title:'{{ trans('shop.label.city_name') }}'}
                 ,{field:'view_count',title:'{{ trans('shop.label.view_count') }}'}
+                ,{field:'created_at',title:'{{ trans('app.created_at') }}'}
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
             ,id: 'fb-table'
+            ,page: true
+            ,limit: 10
             ,height: 'full-200'
         });
     });
