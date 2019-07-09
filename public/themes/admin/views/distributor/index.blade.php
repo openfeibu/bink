@@ -47,6 +47,7 @@
                 ,{field:'distributor_name',title:'{{ trans('distributor.label.distributor_name') }}'}
                 ,{field:'qrcode',title:'二维码(点击下载)',toolbar:'#qrcodeTEM'}
                 ,{field:'qrcode_count',title:'{{ trans('distributor.label.qrcode_count') }}'}
+                ,{field:'created_at',title:'{{ trans('app.created_at') }}'}
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
             ,id: 'fb-table'
