@@ -50,6 +50,8 @@
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
             ,id: 'fb-table'
+            ,page: true
+            ,limit: 10
             ,height: 'full-200'
         });
     });
