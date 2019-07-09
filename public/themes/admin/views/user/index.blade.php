@@ -49,6 +49,7 @@
                 ,{field:'name',title:'{!! trans('user.label.name')!!}'}
                 ,{field:'local_city',title:'{!! trans('user.label.local_city')!!}'}
                 ,{field:'avatar',title:'{!! trans('user.label.avatar_url')!!}',toolbar:'#imageTEM'}
+                ,{field:'created_at',title:'{{ trans('app.created_at') }}'}
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]
             ,id: 'fb-table'

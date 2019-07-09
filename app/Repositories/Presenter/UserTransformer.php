@@ -15,8 +15,8 @@ class UserTransformer extends TransformerAbstract
             'name'              => $user->name,
             'avatar'            => $user->avatar,
             'local_city'         => $user->local_city,
-            'created_at'        => format_date($user->created_at),
-            'updated_at'        => format_date($user->updated_at),
+            'created_at'        => format_date_time($user->created_at,'Y-m-d H:i:s'),
+            'updated_at'        => format_date_time($user->updated_at,'Y-m-d H:i:s'),
         ];
     }
 }
