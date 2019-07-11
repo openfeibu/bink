@@ -27,13 +27,9 @@ class ShopController extends BaseController
     public function index(Request $request)
     {
 		$search_key = $request->input('search_key','');
-        $input_distributor_id = $request->input('distributor_id','');
 		$distributor_id = $request->input('distributor_id',Auth::user()->distributor_id);
 		$distributor_shop_ids = DistributorShop::where('distributor_id',$distributor_id)->pluck('shop_id')->toArray();
-        if($input_distributor_id)
-        {
-            Distributor::where('id',$input_distributor_id)->increment('qrcode_count');
-        }
+
         $city_code = $request->input('city_code',Auth::user()->local_city_code);
 		$city = City::where('city_code',$city_code)->first()->toArray();
 		User::where('openid',Auth::user()->openid)->update([

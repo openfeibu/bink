@@ -29,6 +29,7 @@ class HomeController extends BaseController
         if($distributor_id)
         {
             $skip = 1;
+            Distributor::where('id',$distributor_id)->increment('qrcode_count');
         }
         return $this->response->title('首页')
             ->data(compact('skip','distributor_id'))
