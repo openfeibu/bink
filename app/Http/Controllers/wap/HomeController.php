@@ -32,6 +32,13 @@ class HomeController extends BaseController
             $skip = 1;
             Distributor::where('id',$distributor_id)->increment('qrcode_count');
         }
+        $url_parameters = $request->all();
+        if(!count($url_parameters))
+        {
+            User::where('openid',Auth::user()->openid)->update([
+                'distributor_id' => '',
+            ]);
+        }
         return $this->response->title('首页')
             ->data(compact('skip','distributor_id'))
             ->view('home')
