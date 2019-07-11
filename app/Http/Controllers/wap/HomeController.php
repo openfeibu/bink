@@ -7,6 +7,7 @@ use App\Http\Controllers\Wap\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Distributor;
 
 class HomeController extends BaseController
 {
