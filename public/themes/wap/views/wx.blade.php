@@ -7,12 +7,12 @@
             wx.config(config);
             wx.ready(function(){
                 wx.getLocation({
-                    type: 'wgs84', // Ä¬ÈÏÎªwgs84µÄgps×ø±ê£¬Èç¹ûÒª·µ»ØÖ±½Ó¸øopenLocationÓÃµÄ»ğĞÇ×ø±ê£¬¿É´«Èë'gcj02'
+                    type: 'wgs84', // é»˜è®¤ä¸ºwgs84çš„gpsåæ ‡ï¼Œå¦‚æœè¦è¿”å›ç›´æ¥ç»™openLocationç”¨çš„ç«æ˜Ÿåæ ‡ï¼Œå¯ä¼ å…¥'gcj02'
                     success: function (res) {
-						var latitude = res.latitude; // Î³¶È£¬¸¡µãÊı£¬·¶Î§Îª90 ~ -90
-                        var longitude = res.longitude; // ¾­¶È£¬¸¡µãÊı£¬·¶Î§Îª180 ~ -180¡£
-                        var speed = res.speed; // ËÙ¶È£¬ÒÔÃ×/Ã¿Ãë¼Æ
-                        var accuracy = res.accuracy; // Î»ÖÃ¾«¶È
+						var latitude = res.latitude; // çº¬åº¦ï¼Œæµ®ç‚¹æ•°ï¼ŒèŒƒå›´ä¸º90 ~ -90
+                        var longitude = res.longitude; // ç»åº¦ï¼Œæµ®ç‚¹æ•°ï¼ŒèŒƒå›´ä¸º180 ~ -180ã€‚
+                        var speed = res.speed; // é€Ÿåº¦ï¼Œä»¥ç±³/æ¯ç§’è®¡
+                        var accuracy = res.accuracy; // ä½ç½®ç²¾åº¦
 						$.ajax({
 							url : "{{ url('/user/saveLocation') }}",
 							data : {'latitude':latitude,'longitude':longitude,'_token':"{!! csrf_token() !!}"},
@@ -43,28 +43,28 @@
 								var message =  responseText.msg;
 								if(!message)
 								{
-									message = '·şÎñÆ÷´íÎó';
+									message = 'æœåŠ¡å™¨é”™è¯¯';
 								}
 								$fb.fbNews({content:message,type:'warning'});
 							}
 						})
-                        
+
                     }
                 });
 
-				
+
             })
 
         }
 	function openLocation(latitude,longitude,name,address)
 	{
 		wx.openLocation({
-			latitude: parseFloat(latitude), // Î³¶È£¬¸¡µãÊı£¬·¶Î§Îª90 ~ -90
-			longitude: parseFloat(longitude), // ¾­¶È£¬¸¡µãÊı£¬·¶Î§Îª180 ~ -180¡£
-			name: name, // Î»ÖÃÃû
-			address: address, // µØÖ·ÏêÇéËµÃ÷
-			scale: 16, // µØÍ¼Ëõ·Å¼¶±ğ,ÕûĞÎÖµ,·¶Î§´Ó1~28¡£Ä¬ÈÏÎª×î´ó
-			infoUrl: '' // ÔÚ²é¿´Î»ÖÃ½çÃæµ×²¿ÏÔÊ¾µÄ³¬Á´½Ó,¿Éµã»÷Ìø×ª
+			latitude: parseFloat(latitude), // çº¬åº¦ï¼Œæµ®ç‚¹æ•°ï¼ŒèŒƒå›´ä¸º90 ~ -90
+			longitude: parseFloat(longitude), // ç»åº¦ï¼Œæµ®ç‚¹æ•°ï¼ŒèŒƒå›´ä¸º180 ~ -180ã€‚
+			name: name, // ä½ç½®å
+			address: address, // åœ°å€è¯¦æƒ…è¯´æ˜
+			scale: 16, // åœ°å›¾ç¼©æ”¾çº§åˆ«,æ•´å½¢å€¼,èŒƒå›´ä»1~28ã€‚é»˜è®¤ä¸ºæœ€å¤§
+			infoUrl: '' // åœ¨æŸ¥çœ‹ä½ç½®ç•Œé¢åº•éƒ¨æ˜¾ç¤ºçš„è¶…é“¾æ¥,å¯ç‚¹å‡»è·³è½¬
 		});
 	}
-</script>	
+</script>
