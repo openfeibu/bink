@@ -565,3 +565,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 	display:block;
 	text-indent:0.5rem;
 }
+.city-sidaber p.select{
+	color:#ec6300
+}

@@ -42,7 +42,7 @@
     </div>
 </div>
 
-@include('footer')
+
 <script>
     $(function(){
 
@@ -57,3 +57,4 @@
 
     })
 </script>
+@include('footer')

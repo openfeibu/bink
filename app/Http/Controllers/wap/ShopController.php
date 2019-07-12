@@ -40,7 +40,7 @@ class ShopController extends BaseController
             return $query->where('city_code', $city_code);
         })->when($search_key,function ($query) use ($search_key) {
             return $query->where('shop_name', 'like','%'.$search_key.'%');
-        })->when($distributor_shop_ids,function ($query) use ($distributor_shop_ids) {
+        })->when($distributor_id,function ($query) use ($distributor_shop_ids) {
             return $query->whereIn('id', $distributor_shop_ids);
         })
         ->orderBy('id','desc')

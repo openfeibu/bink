@@ -18,11 +18,30 @@
         }
         var wrapper = document.querySelector('.wrapper');
         var scroll = new BScroll(wrapper, options);
+	 var scrollTopArr = [];
+        var select = 0;
+        scroll.on('scrollEnd', (pos) => {
+            console.log(pos.y)
+            scrollTopArr.forEach(function(v,k){
+                if(-pos.y >= v-scrollTopArr[0]-5){
+                    select = k
+                } 
+            })
+            $(".city-sidaber p").eq(select).addClass("select").siblings("p").removeClass("select")
+        })
         $('.header .map').on('click',function(){
             $('.city-box').slideDown(500,function(){
                 scroll.refresh();
             });
             $('.masker').removeClass('hidden');
+			setTimeout(function(){
+                if(scrollTopArr.length == 0){
+                    $(".letter-title").each(function(k,v){
+                        scrollTopArr.push($(v).offset().top)
+                    })
+                    console.log(scrollTopArr)
+                }
+            },600)
         })
         $('.masker').on('click', function(){
             $('.masker').addClass('hidden');

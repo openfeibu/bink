@@ -52,7 +52,7 @@ class WeChatController extends Controller
         }
         $app = app('wechat.official_account');
         $app->jssdk->setUrl($url);
-        $config = $app->jssdk->buildConfig($arr,$debug,$json);
+        $config = $app->jssdk->buildConfig($arr,$debug,$json,$url);
 
         return $this->response->message('获取成功')
             ->data([
