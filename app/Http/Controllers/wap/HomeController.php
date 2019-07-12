@@ -11,9 +11,15 @@ use App\Models\Distributor;
 
 class HomeController extends BaseController
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
         parent::__construct();
+        $distributor_id = $request->input('distributor_id','');
+        if($distributor_id)
+        {
+            $skip = 1;
+            Distributor::where('id',$distributor_id)->increment('qrcode_count');
+        }
         $this->middleware('auth.wechat:user.web');
     }
     /**
@@ -26,12 +32,7 @@ class HomeController extends BaseController
 		//$city = City::where('city_code',Auth::user()->city_code)->first();
 		//$city = $city ? $city->toArray() : [];
         $skip = $request->input('skip',1);
-        $distributor_id = $request->input('distributor_id','');
-        if($distributor_id)
-        {
-            $skip = 1;
-            Distributor::where('id',$distributor_id)->increment('qrcode_count');
-        }
+
         $url_parameters = $request->all();
         if(!count($url_parameters))
         {
