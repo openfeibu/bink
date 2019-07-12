@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Closure,Auth;
+use Closure,Auth,Cache,Url;
 
 class WeChatAuthenticate
 {
@@ -16,6 +16,8 @@ class WeChatAuthenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if(!Auth::guard($guard)->check()) {
+            $url = url()->full();
+            Cache::add('url', $url);
             return redirect()->guest("/wechat");
         }
 

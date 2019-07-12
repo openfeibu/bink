@@ -8,6 +8,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Cache;
 
 class WeChatController extends Controller
 {
@@ -32,7 +33,10 @@ class WeChatController extends Controller
         }
 
         Auth::login($customer, true);
-        return redirect('/');
+
+        $url = Cache::pull('url') ?? '/';
+
+        return redirect($url);
     }
     public function getJSSDKConfig(Request $request){
         $arr = explode(',',$request->input('apis',''));
