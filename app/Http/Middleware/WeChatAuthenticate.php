@@ -17,7 +17,7 @@ class WeChatAuthenticate
     {
         if(!Auth::guard($guard)->check()) {
             $url = url()->full();
-            Cache::add('url', $url);
+            Cache::add('url', $url,1);
             return redirect()->guest("/wechat");
         }
 
