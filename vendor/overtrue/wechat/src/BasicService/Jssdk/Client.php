@@ -92,9 +92,9 @@ class Client extends BaseClient
     {
         $cacheKey = sprintf('easywechat.basic_service.jssdk.ticket.%s.%s', $type, $this->getAppId());
 
-        if (!$refresh && $this->getCache()->has($cacheKey)) {
-            return $this->getCache()->get($cacheKey);
-        }
+        // if (!$refresh && $this->getCache()->has($cacheKey)) {
+            // return $this->getCache()->get($cacheKey);
+        // }
 
         $result = $this->castResponseToType(
             $this->requestRaw($this->ticketEndpoint, 'GET', ['query' => ['type' => $type]]),
