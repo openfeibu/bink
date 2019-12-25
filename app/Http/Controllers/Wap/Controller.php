@@ -27,6 +27,7 @@ class Controller extends BaseController
     public function __construct()
     {
         set_route_guard('web','user','wap');
+        auth()->loginUsingId(5);
         $this->response = app(ResourceResponse::class);
         $this->setTheme();
     }
