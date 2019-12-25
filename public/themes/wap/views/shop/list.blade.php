@@ -2,7 +2,7 @@
     <div class="shopList-item">
         <a href="{{ url('/shop/'.$shop['id']) }}">
             <div class="img">
-                <img src="{{ url('image/original/'.$shop['image']) }}" alt="">
+                <img src="@if($shop['image']){{ url('image/original/'.$shop['image']) }}@else{{ theme_asset('/images/default_shop.jpeg') }}@endif" alt="">
             </div>
             <div class="test">
                 <div class="name fb-overflow-1">{{ $shop['shop_name'] }}</div>

@@ -7,6 +7,7 @@
         <div class="search">
             <form id="searchForm" action="{{ url('/shop') }}">
                 <input type="search" name="search_key" placeholder="按零售门店的名称来搜索" value="@if(isset($search_key)){{ $search_key}}@endif">
+                <input type="hidden" name="city_code" value="@if(isset($city_code)){{ $city_code}}@endif">
 				{!! csrf_field() !!}
             </form>
         </div>

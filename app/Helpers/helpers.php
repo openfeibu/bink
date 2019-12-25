@@ -725,3 +725,8 @@ function get_distance($from,$to,$km=true,$decimal=2){
     }
     return round($distance, $decimal);
 }
+
+function to_km($distance)
+{
+    return sprintf("%.2f",$distance / 1000);
+}

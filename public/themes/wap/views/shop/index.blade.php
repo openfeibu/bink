@@ -41,7 +41,7 @@
 
                 $.ajax({
                     url : "{{ route('wap.shop.index') }}",
-                    data : {'page':page},
+                    data : {'page':page,'city_code':"{{$city_code}}"},
                     type : 'get',
                     dataType : "json",
                     success : function (data) {

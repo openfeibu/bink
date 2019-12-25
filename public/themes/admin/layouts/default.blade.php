@@ -8,6 +8,8 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="x5-orientation" content="portrait">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
     <title>冰壳科技后台管理系统</title>
     {!! Theme::asset()->styles() !!}
     {{--<script src='{{ asset('js/jquery-1.7.2.min.js') }}'></script>--}}

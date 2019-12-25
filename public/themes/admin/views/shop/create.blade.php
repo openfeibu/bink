@@ -46,6 +46,7 @@
                         <div class="layui-input-inline">
                             <input type="text" name="business_time" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('shop.label.business_time') }}" class="layui-input" id="business_time">
                         </div>
+                        <div class="layui-form-mid layui-word-aux">（09:00 - 22:00）</div>
                     </div>
 
                     <div class="layui-form-item">
