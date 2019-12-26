@@ -95,12 +95,12 @@ class ShopController extends BaseController
 
                 return $this->response
                     ->success()
-                    ->data($data)
+                    ->data($shops_data)
                     ->output();
             }
             return $this->response
                 ->success()
-                ->data('')
+                ->data($shops_data)
                 ->output();
         }
         return $this->response->title('门店')
