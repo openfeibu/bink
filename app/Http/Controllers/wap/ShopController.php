@@ -44,26 +44,26 @@ class ShopController extends BaseController
 
         if ($this->response->typeIs('json')) {
             $shops = Shop::select(DB::raw("*,ROUND(  
-            6371.393 * 2 * ASIN(  
-                SQRT(  
-                    POW(  
-                        SIN(  
-                            (  
-                                {$latitude} * 3.1415926 / 180 - latitude * PI() / 180  
-                            ) / 2  
-                        ),  
-                        2  
-                    ) + COS({$latitude} * 3.1415926 / 180) * COS(latitude * PI() / 180) * POW(  
-                        SIN(  
-                            (  
-                                {$longitude} * 3.1415926 / 180 - longitude * PI() / 180  
-                            ) / 2  
-                        ),  
-                        2  
-                    )  
-                )  
-            ) * 1000  
-        ) AS distance"))
+                    6371.393 * 2 * ASIN(  
+                        SQRT(  
+                            POW(  
+                                SIN(  
+                                    (  
+                                        {$latitude} * 3.1415926 / 180 - latitude * PI() / 180  
+                                    ) / 2  
+                                ),  
+                                2  
+                            ) + COS({$latitude} * 3.1415926 / 180) * COS(latitude * PI() / 180) * POW(  
+                                SIN(  
+                                    (  
+                                        {$longitude} * 3.1415926 / 180 - longitude * PI() / 180  
+                                    ) / 2  
+                                ),  
+                                2  
+                            )  
+                        )  
+                    ) * 1000  
+                ) AS distance"))
                 ->when($city_code,function ($query) use ($city_code) {
                     return $query->where('city_code', $city_code);
                 })->when($search_key,function ($query) use ($search_key) {
