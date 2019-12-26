@@ -41,7 +41,9 @@ class ShopController extends BaseController
         $latitude = Auth::user()->latitude ? Auth::user()->latitude : 0;
         $longitude = Auth::user()->longitude ? Auth::user()->longitude : 0;
 
-        $shops = Shop::select(DB::raw("*,ROUND(  
+
+        if ($this->response->typeIs('json')) {
+            $shops = Shop::select(DB::raw("*,ROUND(  
             6371.393 * 2 * ASIN(  
                 SQRT(  
                     POW(  
@@ -62,28 +64,28 @@ class ShopController extends BaseController
                 )  
             ) * 1000  
         ) AS distance"))
-        ->when($city_code,function ($query) use ($city_code) {
-            return $query->where('city_code', $city_code);
-        })->when($search_key,function ($query) use ($search_key) {
-            return $query->where('shop_name', 'like','%'.$search_key.'%');
-        })->when($distributor_id,function ($query) use ($distributor_shop_ids) {
-            return $query->whereIn('id', $distributor_shop_ids);
-        })
-        ->orderBy('distance','asc')
-        ->orderBy('id','desc')
-        ->paginate(20);
+                ->when($city_code,function ($query) use ($city_code) {
+                    return $query->where('city_code', $city_code);
+                })->when($search_key,function ($query) use ($search_key) {
+                    return $query->where('shop_name', 'like','%'.$search_key.'%');
+                })->when($distributor_id,function ($query) use ($distributor_shop_ids) {
+                    return $query->whereIn('id', $distributor_shop_ids);
+                })
+                ->orderBy('distance','asc')
+                ->orderBy('id','desc')
+                ->paginate(20);
 
 
-        $shops_data = $shops->toArray()['data'];
+            $shops_data = $shops->toArray()['data'];
 
-		foreach($shops_data as $key => $shop)
-		{
-			//$shops_data[$key]['distance'] = $latitude ? get_distance([$longitude,$latitude],[$shop['longitude'],$shop['latitude']]) : '未知';
-            $shops_data[$key]['distance'] = $latitude ? to_km($shop['distance']) : '未知';
-		}
+            foreach($shops_data as $key => $shop)
+            {
+                //$shops_data[$key]['distance'] = $latitude ? get_distance([$longitude,$latitude],[$shop['longitude'],$shop['latitude']]) : '未知';
+                $shops_data[$key]['distance'] = $latitude ? to_km($shop['distance']) : '未知';
+            }
 
-        if ($this->response->typeIs('json')) {
 
+            /*
             $data = [];
             if($shops->count())
             {
@@ -95,16 +97,17 @@ class ShopController extends BaseController
 
                 return $this->response
                     ->success()
-                    ->data($shops_data)
+                    ->data($data)
                     ->output();
             }
+            */
             return $this->response
                 ->success()
                 ->data($shops_data)
                 ->output();
         }
         return $this->response->title('门店')
-            ->data(compact('shops_data','city','search_key','city_code'))
+            ->data(compact('city','search_key','city_code'))
             ->view('shop.index')
             ->output();
     }
