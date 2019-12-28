@@ -8,8 +8,8 @@
             confirmArea: '.confirm-area-control',
             cancelArea: '.cancel-area-control',
             scrollItem: '.area-item',
-            defaultSplit: ",",
-            eventInpFocus: 'focus',
+            defaultSplit: "",
+            eventInpFocus: 'click',
             eventTouchStart: 'touchstart',
             eventTouchMove: 'touchmove',
             eventClick: 'click',
@@ -60,6 +60,7 @@
                 $.getJSON(params.jsonUrl, function(data){
                     $('.area-province-scroll').empty();
                     params.areaData = data[0];
+					
                     $.each(params.areaData, function (k, v) {
                         var province = '<div data-code="'+ v.provinceCode +'">'+ v.provinceName +'</div>';
                         $('.area-province-scroll').append(province);
@@ -93,6 +94,7 @@
             });
             // 确定地区
             $(params.elePage).on(params.eventClick, params.confirmArea, function () {
+				console.log(params.regionObj.code)
                 var html = params.provinceObj.name + params.defaultSplit + params.cityObj.name + params.defaultSplit + params.regionObj.name;
                 $(params.inpEle).val(html);
 				$(".header .header-t .map span").text(html)
@@ -100,6 +102,7 @@
 				
 				$(params.areaMask).find(".area-larger-main").css({"bottom":"-100%"})
                 clearAreaList();
+				ajaxList(params.regionObj.code)
             });
             // 取消选择
             $(params.elePage).on(params.eventClick, params.cancelArea, function () {
@@ -129,7 +132,9 @@
                 params.endY = e.originalEvent.changedTouches[0].pageY;
                 params.moveY = params.endY - params.startY;
                 params.newTop = Math.round(params.oldTop + params.moveY);
+				
                 if (params.nowTop <= 0) {
+					
                     if (params.moveY < 0) {         // 上滑
                         if(params.newTop >= 40 - ($this.children().outerHeight()) ) {
                             if (params.newTop % 40 <= -20) {
@@ -141,6 +146,7 @@
                             }
                         }
                     } else if (params.moveY > 0) {  // 下滑
+						
                         if (params.newTop <= 0) {
                             if (params.newTop % 40 >= 20) {
                                 params.scrollNum = Math.round(params.newTop / 40) + 1;
@@ -149,12 +155,15 @@
                                 params.scrollNum = Math.round(params.newTop / 40);
                                 $this.css('top', params.scrollNum * 40);
                             }
-                        }
+                        }else{
+							params.scrollNum =0;
+						}
                     }
                 }
             });
             // 停止触摸
             $(params.elePage).on('touchend', params.scrollItem, function (e) {
+				
                 var $this = $(this);
                 // 触摸的区域
                 var areaIndex = $('.area-item').index($this);
@@ -177,7 +186,7 @@
                         // 保存市
                         saveareaMsg(1, -params.scrollNum);
                         params.scrollCity = -params.scrollNum;
-                        console.log(-params.scrollNum)
+                        console.log(params)
                         console.log(params.cityList[-params.scrollNum])
                         params.regionList = params.cityList[-params.scrollNum].areaVOList;
                         // 加载区
@@ -197,6 +206,7 @@
             });
             // 加载地区列表 areaIndex区域box下标  areaArr区域列表
             function loadAreaList(areaIndex, areaArr) {
+				
                 $(params.scrollItem).eq(areaIndex).children().empty();
                 $(params.scrollItem).eq(areaIndex).css('top', 0);
                 // 加载市

@@ -1,4 +1,4 @@
-<script>
+
 	var shareLinkUlr = location.href.split("#")[0];
     var city_code;
         $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':false,'json':false},function(data,status){
@@ -61,4 +61,4 @@
 			infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
 		});
 	}
-</script>
+

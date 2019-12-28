@@ -1,4 +1,4 @@
-@include('wx')
+
 <div id="page">
 @include('header')
 <div class="main">
@@ -43,8 +43,7 @@
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=YVHBZ-LNORJ-N2WFY-FDDOG-YZQRK-XOFQ2"></script>
 
 <script>
-
-    var map = null;
+ var map = null;
 	var coordinatesList = [];
 	var maxlat;
 	var minlat;
@@ -56,6 +55,9 @@
 	var preMarker;//上一个点击的图标
 	var markersArray=[]; //标志数组
 	var checkedMarker=null; //标志数组
+	var page = 0 ;
+	@include('wx');
+   
     //初始化地图函数  自定义函数名init
     function init() {
         //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
@@ -77,13 +79,13 @@
     init();
 
 		ajaxList();
-        var page = 0 ;
+        
         
 	  function getList(that){
 	
 		  if(!loading){
 			return false
-			}
+		}
 		  var scrollTop = that.scrollTop();
 		  var h = $(".shopList").height();
 		  var ah = $(".shopList-box").height();
@@ -99,7 +101,7 @@
                 page++;
                 $.ajax({
                     url : "{{ route('wap.home') }}",
-                    data : {'page':page,'city_code':"{{$city_code}}",'distributor_id':"{{ $distributor_id }}"},
+                    data : {'page':page,'city_code':city_code,'distributor_id':"{{ $distributor_id }}"},
                     type : 'get',
                     dataType : "json",
                     success : function (data) {
@@ -169,7 +171,7 @@
 							addMarker();
 							$(".shopList-box").append(html);
 							
-							if(loading = false){
+							if(loading == false){
 								$(".shopList-box").append('<div class="noData">已经到底了</div>');
 							}
 						}
@@ -337,5 +339,9 @@
 			$(".container-map").css({"z-index":'-1',"opacity":"0"});
 			showOverlays();
 			checkedMarker.setMap(null);
+		})
+		//选择筛选
+		$(".filters ul").on("click","li",function(){
+			$(this).toggleClass("active")
 		})
 </script>

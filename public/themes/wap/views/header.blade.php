@@ -39,7 +39,7 @@
 		<div class="filters">
 			<p class="line line_title">售卖产品：</p>
 			<ul class="line">
-				<li class="active">套装 / 替换弹 / 小冰壳等</li>
+				<li class="default active" >套装 / 替换弹 / 小冰壳等</li>
 				<li class="">一次性小冰壳</li>
 			</ul>
 			<p class="line line_title">热门活动：</p>
