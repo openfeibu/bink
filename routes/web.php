@@ -58,6 +58,8 @@ Route::group([
         Route::get('index', 'MenuResourceController@index');
     });
 
+    Route::get('/area/list', 'AreaResourceController@getList')->name('area.list');
+
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
 
     Route::resource('user', 'UserResourceController');

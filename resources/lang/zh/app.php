@@ -107,5 +107,9 @@ return [
         'update' => '无法更新 。',
         'delete' => '无法删除 。',
     ],
-
+    'area' => '地区',
+    'select_country' => '请选择国家',
+    'select_province' => '请选择省',
+    'select_city' => '请选择市',
+    'select_county' => '请选择区',
 ];
