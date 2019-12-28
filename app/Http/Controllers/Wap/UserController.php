@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Wap;
 
+use App\Models\Area;
 use Route,Auth;
 use App\Http\Controllers\Wap\Controller as BaseController;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class UserController extends BaseController
 		$lbs_service = new LBSService();
         $data = $lbs_service->geocode_regeo($latitude.','.$longitude);
 		$city_name = $data['result']['address_component']['city'];
-		$city = City::where('name',$city_name)->first();
+		//$city = City::where('name',$city_name)->first();
+        $city = Area::where('name',$city_name)->where('level_type',2)->first();
 		if(!$user->latitude)
 		{
 			$first = true;
@@ -37,16 +39,16 @@ class UserController extends BaseController
 				'latitude' => $latitude,
 				'longitude' => $longitude,
 				'local_city' => $city_name,
-                'local_city_code' => $city->city_code,
+                'local_city_code' => $city->code,
 				'city' => $city_name,
-				'city_code' => $city->city_code,
+				'city_code' => $city->code,
 			]);
 		}else{
 			User::where('openid',$user->openid)->update([
 				'latitude' => $latitude,
 				'longitude' => $longitude,
 				'local_city' => $city_name,
-                'local_city_code' => $city->city_code,
+                'local_city_code' => $city->code,
 			]);
 		}
 		
@@ -55,7 +57,7 @@ class UserController extends BaseController
 			->code(200)
 			->data([
 				'first' => $first,
-                'city_code' => $city->city_code,
+                'city_code' => $city->code,
 			])
 			->output();
 	}

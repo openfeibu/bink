@@ -26,8 +26,6 @@ class HomeController extends BaseController
      */
     public function home(Request $request)
     {
-		//$city = City::where('city_code',Auth::user()->city_code)->first();
-		//$city = $city ? $city->toArray() : [];
         $distributor_id = $request->input('distributor_id','');
         if($distributor_id)
         {
@@ -45,11 +43,15 @@ class HomeController extends BaseController
 
         $city_code = $request->input('city_code');
         $city_code = $city_code ? $city_code : Auth::user()->local_city_code;
-        $city = City::where('city_code',$city_code)->first()->toArray();
-        User::where('openid',Auth::user()->openid)->update([
-            'city_code' =>$city_code,
-            'city' => $city['name'],
-        ]);
+        //$city = City::where('city_code',$city_code)->first()->toArray();
+        $area = Area::where('code',$city_code)->first();
+        if($area->level_type == 2)
+        {
+            User::where('openid',Auth::user()->openid)->update([
+                'city_code' =>$city_code,
+                'city' => $area->name,
+            ]);
+        }
 
         $latitude = Auth::user()->latitude ? Auth::user()->latitude : 0;
         $longitude = Auth::user()->longitude ? Auth::user()->longitude : 0;
@@ -77,8 +79,14 @@ class HomeController extends BaseController
                         )  
                     ) * 1000  
                 ) AS distance"))
-                ->when($city_code,function ($query) use ($city_code) {
-                    return $query->where('city_code', $city_code);
+                ->when($area,function ($query) use ($area) {
+                    if($area->type == 1){
+                        return $query->where('province_code', $area->code);
+                    }else if($area->type == 2){
+                        return $query->where('city_code', $area->code);
+                    }else if($area->type == 3){
+                        return $query->where('country_code', $area->code);
+                    }
                 })->when($search_key,function ($query) use ($search_key) {
                     return $query->where('shop_name', 'like','%'.$search_key.'%');
                 })->when($distributor_id,function ($query) use ($distributor_shop_ids) {
