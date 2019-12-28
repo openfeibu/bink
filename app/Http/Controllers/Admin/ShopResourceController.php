@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\ResourceController as BaseController;
+use App\Models\Area;
 use App\Models\City;
+use App\Models\Province;
 use App\Models\Shop;
+use App\Models\ShopCategory;
 use App\Repositories\Eloquent\ShopRepositoryInterface;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
@@ -50,10 +53,10 @@ class ShopResourceController extends BaseController
     public function create(Request $request)
     {
         $shop = $this->repository->newInstance([]);
-
+        $categories = ShopCategory::orderBy('id','asc')->get();
         return $this->response->title(trans('app.name'))
             ->view('shop.create')
-            ->data(compact('shop'))
+            ->data(compact('shop','categories'))
             ->output();
     }
     public function store(Request $request)
@@ -64,12 +67,17 @@ class ShopResourceController extends BaseController
             $business_time_arr = explode('-',$business_time);
             $opening_time = isset($business_time_arr[0]) ? trim($business_time_arr[0]) : '';
             $closing_time = isset($business_time_arr[1]) ? trim($business_time_arr[1]) : '';
-            $city = City::where('city_code',$attributes['city_code'])->first();
-
+            $province = Area::where('code',$attributes['province_code'])->first();
+            $city = Area::where('code',$attributes['city_code'])->first();
+            $county = Area::where('code',$attributes['county_code'])->first();
             $data = [
                 'shop_name' => trim($attributes['shop_name']),
+                'province_code' => $attributes['province_code'],
+                'province_name' => $province->name,
                 'city_code' => $attributes['city_code'],
                 'city_name' => $city->name,
+                'county_code' => $attributes['county_code'],
+                'county_name' => $county->name,
                 'opening_time' => $opening_time,
                 'closing_time' => $closing_time,
                 'content' => $attributes['content'] ?? '',
@@ -81,6 +89,8 @@ class ShopResourceController extends BaseController
             ];
 
             $shop = $this->repository->create($data);
+            $categories          = $request->get('categories');
+            $shop->categories()->sync($categories);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('shop.name')]))
                 ->code(0)
@@ -102,9 +112,10 @@ class ShopResourceController extends BaseController
         } else {
             $view = 'shop.new';
         }
-
+        $categories = ShopCategory::orderBy('id','asc')->get();
+        $shop_category_ids = $shop->categories->pluck('id')->toArray();
         return $this->response->title(trans('app.view') . ' ' . trans('shop.name'))
-            ->data(compact('shop'))
+            ->data(compact('shop','categories','shop_category_ids'))
             ->view($view)
             ->output();
     }
@@ -116,12 +127,18 @@ class ShopResourceController extends BaseController
             $business_time_arr = explode('-',$business_time);
             $opening_time = isset($business_time_arr[0]) ? trim($business_time_arr[0]) : '';
             $closing_time = isset($business_time_arr[1]) ? trim($business_time_arr[1]) : '';
-            $city = City::where('city_code',$attributes['city_code'])->first();
+            $province = Area::where('code',$attributes['province_code'])->first();
+            $city = Area::where('code',$attributes['city_code'])->first();
+            $county = Area::where('code',$attributes['county_code'])->first();
 
             $data = [
                 'shop_name' => trim($attributes['shop_name']),
+                'province_code' => $attributes['province_code'],
+                'province_name' => $province->name,
                 'city_code' => $attributes['city_code'],
                 'city_name' => $city->name,
+                'county_code' => $attributes['county_code'],
+                'county_name' => $county->name,
                 'opening_time' => $opening_time,
                 'closing_time' => $closing_time,
                 'content' => $attributes['content'] ?? '',

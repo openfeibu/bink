@@ -18,16 +18,15 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">{{ trans('shop.label.city_name') }}</label>
-                        <div class="layui-input-inline">
-                            <select name="city_code" lay-verify="required" lay-search>
-                                <option value=""></option>
-                                @foreach(app('city_repository')->getCities() as $key => $city)
-                                    <option value="{{ $city['city_code'] }}" @if($city['city_code'] == $shop['city_code']) selected @endif>{{ $city['name'] }}</option>
-                                @endforeach
-                            </select>
+                        <label class="layui-form-label">分类</label>
+                        <div class="layui-input-block">
+                            @foreach($categories as $key => $category)
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" title="{{ $category->name }}" @if(in_array($category->id,$shop_category_ids) || $category->type == 'system') checked @endif >
+                            @endforeach
                         </div>
                     </div>
+                    {!! Theme::widget('area',['province_code' => $shop->province_code,'city_code' => $shop->city_code,'county_code' => $shop->county_code ])->render() !!}
+
                     <div class="layui-form-item shopAccout">
                         <label class="layui-form-label">店铺头像（100*100）</label>
                         {!! $shop->files('image')

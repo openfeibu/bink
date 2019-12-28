@@ -28,7 +28,7 @@ abstract class Response
     /**
      * @var Response code for the response.
      */
-    protected $code = null;
+    protected $code = 0;
 
     /**
      * @var  Url for the redirect response.
@@ -36,6 +36,8 @@ abstract class Response
     protected $url = null;
 
     protected $count = 0;
+
+    protected $http_code = 200;
 
     /**
      * Return the type of response for the current request.
@@ -67,18 +69,16 @@ abstract class Response
      * @return json string
      *
      */
-    protected function json()
+    public function json()
     {
         return response()->json([
-            'msg' => $this->getMessage(),
+            'message' => $this->getMessage(),
             'status' => $this->getStatus(),
             'code' => $this->getCode(),
             'data' => $this->getData(),
             'count' => $this->getCount(),
             'url'     => $this->getUrl(),
-        ], 200);
-
-        //return response()->json($this->getData(), 200);
+        ], $this->http_code);
     }
 
     /**
@@ -117,10 +117,6 @@ abstract class Response
         return response()->view($this->getView(), $this->getData());
         */
     }
-    public function render()
-    {
-        return $this->http();
-    }
 
     /**
      * Return  whole page for the http request.
@@ -130,29 +126,9 @@ abstract class Response
      */
     public function redirect()
     {
-
-        if ($this->typeIs('json')) {
-            return response()->json([
-                'msg' => $this->getMessage(),
-                'status' => $this->getStatus(),
-                'code' => $this->getCode(),
-                'data' => $this->getData(),
-                'count' => $this->getCount(),
-                'url'     => $this->getUrl(),
-            ], $this->getStatusCode());
+        if ($this->typeIs('json') || $this->typeIs('ajax')) {
+            return $this->json();
         }
-
-        if ($this->typeIs('ajax')) {
-            return response()->json([
-                'msg' => $this->getMessage(),
-                'status' => $this->getStatus(),
-                'code' => $this->getCode(),
-                'data' => $this->getData(),
-                'count' => $this->getCount(),
-                'url'     => $this->getUrl(),
-            ], $this->getStatusCode());
-        }
-
         return redirect($this->url)
             ->withMessage($this->getMessage())
             ->withStatus($this->getStatus())
@@ -227,16 +203,12 @@ abstract class Response
         return $this->code;
     }
 
-    public function statusCode($code)
-    {
-        $this->status_code = $code;
-    }
     /**
      * @return mixed
      */
     public function getStatusCode()
     {
-        return $this->status_code ?? ($this->status == 'success' ? 201 : 400);
+        return $this->status == 'success' ? 200 : 400;
     }
 
     public function count($count)
@@ -260,10 +232,16 @@ abstract class Response
 
         return $this;
     }
-    public function success()
+    public function success($message=NULL)
     {
         $this->code = '0';
         $this->status = 'success';
+        $this->message = $message;
+        return $this;
+    }
+    public function error()
+    {
+        $this->status = 'error';
         return $this;
     }
     /**
@@ -286,6 +264,12 @@ abstract class Response
         return $this;
     }
 
+    public function http_code($http_code)
+    {
+        $this->http_code = $http_code;
+
+        return $this;
+    }
     /**
      * @param store the response type $this->getData()
      *

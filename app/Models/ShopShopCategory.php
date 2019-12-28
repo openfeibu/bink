@@ -10,14 +10,11 @@ use App\Traits\Filer\Filer;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Shop extends AuthModel
+class ShopShopCategory extends AuthModel
 {
     use Filer, Slugger, DateFormatter,LogsActivity;
 
-    protected $config = 'model.shop.shop';
+    protected $config = 'model.shop.shop_shop_category';
 
-    public function categories()
-    {
-        return $this->belongsToMany(config('model.shop.shop_category.model'))->withTimestamps();
-    }
+
 }
