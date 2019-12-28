@@ -10,6 +10,7 @@ use App\Http\Controllers\Wap\Controller as BaseController;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Area;
 use App\Models\DistributorCity;
 
 class HomeController extends BaseController
