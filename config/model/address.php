@@ -9,7 +9,7 @@ return [
     /*
      * Modules.
      */
-    'modules'  => ['city','province'],
+    'modules'  => ['city','province','area'],
 
     'policies' => [
 
@@ -71,6 +71,23 @@ return [
         'perPage'       => '20',
         'search'        => [
             'name'        => 'like',
+        ],
+    ],
+    'area'     => [
+        'model'        => 'App\Models\Area',
+        'table'        => 'areas',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'fillable'     => ['code', 'parent_code', 'remark_two'],
+        'translate'    => [''],
+        'upload_folder' => 'region',
+        'encrypt'      => ['id'],
+        'revision'     => [],
+        'perPage'      => '20',
+        'search'        => [
+            'title'  => 'like',
         ],
     ],
 ];
