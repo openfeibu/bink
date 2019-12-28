@@ -46,6 +46,7 @@ class HomeController extends BaseController
         $city_code = $city_code ? $city_code : Auth::user()->local_city_code;
         //$city = City::where('city_code',$city_code)->first()->toArray();
         $area = Area::where('code',$city_code)->first();
+
         if($area->level_type == 2)
         {
             User::where('openid',Auth::user()->openid)->update([
@@ -81,11 +82,11 @@ class HomeController extends BaseController
                     ) * 1000  
                 ) AS distance"))
                 ->when($area,function ($query) use ($area) {
-                    if($area->type == 1){
+                    if($area->level_type == 1){
                         return $query->where('province_code', $area->code);
-                    }else if($area->type == 2){
+                    }else if($area->level_type == 2){
                         return $query->where('city_code', $area->code);
-                    }else if($area->type == 3){
+                    }else if($area->level_type == 3){
                         return $query->where('country_code', $area->code);
                     }
                 })->when($search_key,function ($query) use ($search_key) {
