@@ -99,7 +99,7 @@ Route::group([
 	Route::post('/user/saveLocation','UserController@saveLocation');
     Route::get('/shop','ShopController@index')->name('shop.index');
     Route::get('/shop/{shop}','ShopController@show')->name('shop.show');
-
+    Route::get('/report','ReportController@index')->name('report.index');
 
 });
 //Route::get('
