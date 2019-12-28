@@ -8,7 +8,7 @@
             confirmArea: '.confirm-area-control',
             cancelArea: '.cancel-area-control',
             scrollItem: '.area-item',
-            defaultSplit: "",
+            defaultSplit: ",",
             eventInpFocus: 'click',
             eventTouchStart: 'touchstart',
             eventTouchMove: 'touchmove',
@@ -102,7 +102,8 @@
 				
 				$(params.areaMask).find(".area-larger-main").css({"bottom":"-100%"})
                 clearAreaList();
-				ajaxList(params.regionObj.code)
+				resetList();
+				ajaxList(params.regionObj.code);
             });
             // 取消选择
             $(params.elePage).on(params.eventClick, params.cancelArea, function () {

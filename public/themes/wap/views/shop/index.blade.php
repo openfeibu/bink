@@ -76,11 +76,7 @@
     }
 	
     //调用初始化函数地图
-    init();
-
-		ajaxList();
-        
-        
+		init();
 	  function getList(that){
 	
 		  if(!loading){
@@ -95,6 +91,7 @@
 		  }
 
 		}
+		ajaxList();	
 		function ajaxList(city_code) {
 				$(".loading").fadeIn(100);
 				loading = false;
@@ -109,6 +106,7 @@
 							$(".loading").fadeOut(100);
 							var data = data.data;
 							if(page == 1){
+								
 								$(".shopList-box").html("");
 								markersList = {};
 								//第一页
@@ -134,6 +132,7 @@
 					
 							for(var i = 0,c=data.length;i < c ; i++){
 								var v = data[i];
+								console.log(v)
 								html+=' <div class="shopList-item clearfix">'+
 									'<div class="test">'+
 										'<div class="type"><img src="{!! theme_asset('images/zmd.png') !!}" alt=""/></div>'+
@@ -344,4 +343,10 @@
 		$(".filters ul").on("click","li",function(){
 			$(this).toggleClass("active")
 		})
+		//重置数据
+		function resetList(){
+			deleteOverlays();
+			page = 0;
+		}
+		
 </script>
