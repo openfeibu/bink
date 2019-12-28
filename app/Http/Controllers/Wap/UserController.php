@@ -55,6 +55,7 @@ class UserController extends BaseController
 			->code(200)
 			->data([
 				'first' => $first,
+                'city_code' => $city->city_code,
 			])
 			->output();
 	}

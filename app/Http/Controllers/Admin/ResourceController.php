@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Area;
 use App\Models\City;
 use App\Models\Distributor;
 use App\Models\Shop;
@@ -53,6 +54,50 @@ class ResourceController extends BaseController
     }
     public function cityJson()
     {
+        exit;
+        $provinces = Area::where('parent_code',100000)->orderBy('id','asc')->get()->toArray();
+        $data = [];
+        $province_areaVOList = [];
+
+        foreach ($provinces as $province_key => $province)
+        {
+//            $province_areaVOList[$province_key] = [
+//                "provinceCode" => $province['code'],
+//                "provinceName" => $province['name'],
+//            ];
+            $city_areaVOList = [];
+            $cities = Area::where('parent_code',$province['code'])->orderBy('id','asc')->get()->toArray();
+
+            foreach ($cities as $city_key => $city)
+            {
+                $counties = Area::where('parent_code',$city['code'])->orderBy('id','asc')->get()->toArray();
+                $county_areaVOList = [];
+                $county_areaVOList[] = [
+                    "countyCode" => $city['code'],
+                    "countyName" => $city['name'],
+                ];
+                foreach ($counties as $county_key => $county)
+                {
+                    $county_areaVOList[] = [
+                        "countyCode" => $county['code'],
+                        "countyName" => $county['name'],
+                    ];
+                }
+                $city_areaVOList[$city_key]['areaVOList'] = $county_areaVOList;
+                $city_areaVOList[$city_key]['cityCode'] = $city['code'];
+                $city_areaVOList[$city_key]['cityName'] = $city['name'];
+
+
+            }
+            $province_areaVOList[$province_key]['areaVOList'] = $city_areaVOList;
+            $province_areaVOList[$province_key]['provinceCode'] = $province['code'];
+            $province_areaVOList[$province_key]['provinceName' ] = $province['name'];
+
+        }
+        $data[] = $province_areaVOList;
+
+        file_put_contents('js/area.json', json_encode($data ));
+        //print_r(json_encode($province_areaVOList));
         exit;
         $letters = config('common.letter');
         $data = [];
