@@ -87,7 +87,7 @@ class HomeController extends BaseController
                     }else if($area->level_type == 2){
                         return $query->where('city_code', $area->code);
                     }else if($area->level_type == 3){
-                        return $query->where('country_code', $area->code);
+                        return $query->where('county_code', $area->code);
                     }
                 })->when($search_key,function ($query) use ($search_key) {
                     return $query->where('shop_name', 'like','%'.$search_key.'%');
