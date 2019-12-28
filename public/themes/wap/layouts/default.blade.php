@@ -11,7 +11,7 @@
     {!! Theme::asset()->scripts() !!}
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 </head>
-	
+		
 <body  ontouchstart >
 {!! Theme::content() !!}
 <!-- 城市联动 -->

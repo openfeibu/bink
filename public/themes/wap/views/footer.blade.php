@@ -1,6 +1,12 @@
 <div class="copy">
     <p> {!! setting('copyright') !!}</p>
 </div>
+<div class="loading">
+	<div class="loading-c">
+		<img src="{!! theme_asset('images/loading.gif') !!}" alt=""/>
+		<p>加载中</p>
+	</div>
+</div>
 <script>
     $(function(){
         $("#searchForm").on("submit", function(e){
@@ -9,66 +15,7 @@
         });
         
 
-        //城市选择
-        var options = {
-            scrollY: true, // 因为scrollY默认为true，其实可以省略
-            scrollX: true,
-            mouseWheel: true,
-            click: true
-        }
-        var wrapper = document.querySelector('.wrapper');
-        var scroll = new BScroll(wrapper, options);
-	 var scrollTopArr = [];
-        var select = 0;
-        scroll.on('scrollEnd', (pos) => {
-            console.log(pos.y)
-            scrollTopArr.forEach(function(v,k){
-                if(-pos.y >= v-scrollTopArr[0]-5){
-                    select = k
-                } 
-            })
-            $(".city-sidaber p").eq(select).addClass("select").siblings("p").removeClass("select")
-        })
-        $('.header .map').on('click',function(){
-            $('.city-box').slideDown(500,function(){
-                scroll.refresh();
-            });
-            $('.masker').removeClass('hidden');
-			setTimeout(function(){
-                if(scrollTopArr.length == 0){
-                    $(".letter-title").each(function(k,v){
-                        scrollTopArr.push($(v).offset().top)
-                    })
-                    console.log(scrollTopArr)
-                }
-            },600)
-        })
-        $('.masker').on('click', function(){
-            $('.masker').addClass('hidden');
-            $('.city-box').slideUp(500);
-            $('.area-box').slideUp(500);
-        })
-        $('.city-box .content').on('click', 'li',  function(e){
-            //alert(e.target.innerHTML)
-            var city_code =  $(e.target).attr('city_code');
-            
-            $('.city-box').slideUp(500);
-			$('.area-box').slideUp(500);
-            $('.masker').addClass('hidden');
-			setTimeout(function(){
-				window.location.href="{{ url('/shop') }}?city_code="+city_code;	
-			},500)
-			
-        })
-        $('.city-sidaber').on('click',function(e){
-            var value = e.target.innerHTML;
-            var alphabet = $('.letter-title');
-            alphabet.map(function(i,item){
-                if(item.innerHTML == value){
-                    scroll.scrollToElement(item);
-                }
-            })
-        })
+       
 
 
 

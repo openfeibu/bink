@@ -64,9 +64,11 @@ return [
             $theme->asset()->usePath()->add('allen_js', 'js/allen.js');
             $theme->asset()->add('swiper_css', 'lib/swiper/swiper-3.4.2.min.css');
             $theme->asset()->add('swiper_js', 'lib/swiper/swiper-3.4.2.jquery.min.js');
-            $theme->asset()->add('better-scroll_js', 'lib/better-scroll.js');
-            $theme->asset()->add('city_js', 'lib/city.js');
+    
+
             $theme->asset()->add('fbUi_js', 'lib/fbui/fbUi.js');
+			$theme->asset()->usePath()->add('area_js', 'js/area.js');
+			$theme->asset()->usePath()->add('area_css', 'css/area.css');
         },
 
         // Listen on event before render a layout,
