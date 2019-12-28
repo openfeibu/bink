@@ -1,6 +1,5 @@
 <script>
 	var shareLinkUlr = location.href.split("#")[0];
-    var city_code;
         $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':false,'json':false},function(data,status){
             configJsSDK(JSON.parse(data.data.config))
         },'json');
@@ -26,8 +25,19 @@
 									var msg = data.msg;
 									$fb.fbNews({content:msg,type:'warning'});
 								}
-                                city_code = data.data.city_code
-                                ajaxList();
+
+								@if(isset($skip) && $skip)
+
+//								if(data.data.first)
+//								{
+
+								    @if(isset($distributor_id) && !empty($distributor_id))
+                                        window.location.href="{{ url('/shop?distributor_id='.$distributor_id)}}";
+                                    @else
+									    window.location.href="{{ url('/shop')}}";
+                                    @endif
+//								}
+								@endif
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
 								responseText = $.parseJSON(jqXHR.responseText);

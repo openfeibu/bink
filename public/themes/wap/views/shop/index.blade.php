@@ -93,13 +93,13 @@
 		  }
 
 		}
-		function ajaxList(){
+		function ajaxList(city_code) {
 				$(".loading").fadeIn(100);
 				loading = false;
                 page++;
                 $.ajax({
-                    url : "{{ route('wap.shop.index') }}",
-                    data : {'page':page,'city_code':"{{$city_code}}"},
+                    url : "{{ route('wap.home') }}",
+                    data : {'page':page,'city_code':"{{$city_code}}",'distributor_id':"{{ $distributor_id }}"},
                     type : 'get',
                     dataType : "json",
                     success : function (data) {
