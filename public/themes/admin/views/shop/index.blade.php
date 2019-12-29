@@ -6,6 +6,7 @@
         </div>
     </div>
     <div class="main_full">
+        {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
             <div class="tabel-message">
                 <div class="layui-inline tabel-btn">
@@ -45,6 +46,7 @@
                 {checkbox: true, fixed: true}
                 ,{field:'id',title:'ID', width:80, sort: true}
                 ,{field:'shop_name',title:'{{ trans('shop.label.shop_name') }}'}
+                ,{field:'type_desc',title:'{{ trans('shop.label.type') }}'}
                 ,{field:'image',title:'{{ trans('shop.label.image') }}',toolbar:'#imageTEM'}
                 ,{field:'address',title:'{{ trans('shop.label.address') }}'}
                 ,{field:'business_time',title:'{{ trans('shop.label.business_time') }}'}

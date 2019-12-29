@@ -7,6 +7,7 @@ use App\Models\Area;
 use App\Models\City;
 use App\Models\Province;
 use App\Models\Shop;
+use App\Models\ShopActivity;
 use App\Models\ShopCategory;
 use App\Repositories\Eloquent\ShopRepositoryInterface;
 use Illuminate\Http\Request;
@@ -54,9 +55,10 @@ class ShopResourceController extends BaseController
     {
         $shop = $this->repository->newInstance([]);
         $categories = ShopCategory::orderBy('id','asc')->get();
+        $activities = ShopActivity::orderBy('id','asc')->get();
         return $this->response->title(trans('app.name'))
             ->view('shop.create')
-            ->data(compact('shop','categories'))
+            ->data(compact('shop','categories','activities'))
             ->output();
     }
     public function store(Request $request)
@@ -86,11 +88,14 @@ class ShopResourceController extends BaseController
                 'longitude' => $attributes['longitude'],
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
+                'type' => $attributes['type'],
             ];
 
             $shop = $this->repository->create($data);
             $categories          = $request->get('categories');
             $shop->categories()->sync($categories);
+            $activities          = $request->get('activities');
+            $shop->activities()->sync($activities);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('shop.name')]))
                 ->code(0)
@@ -114,8 +119,11 @@ class ShopResourceController extends BaseController
         }
         $categories = ShopCategory::orderBy('id','asc')->get();
         $shop_category_ids = $shop->categories->pluck('id')->toArray();
+        $activities = ShopActivity::orderBy('id','asc')->get();
+        $shop_activity_ids = $shop->activities->pluck('id')->toArray();
+
         return $this->response->title(trans('app.view') . ' ' . trans('shop.name'))
-            ->data(compact('shop','categories','shop_category_ids'))
+            ->data(compact('shop','categories','shop_category_ids','activities','shop_activity_ids'))
             ->view($view)
             ->output();
     }
@@ -147,11 +155,16 @@ class ShopResourceController extends BaseController
                 'longitude' => $attributes['longitude'],
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
+                'type' => $attributes['type'],
             ];
 
             $shop->update($data);
+            $categories          = $request->get('categories');
+            $shop->categories()->sync($categories);
+            $activities          = $request->get('activities');
+            $shop->activities()->sync($activities);
 
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('shop.name')]))
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('shop.name')]))
                 ->code(0)
                 ->status('success')
                 ->url(guard_url('shop/'))
@@ -160,7 +173,7 @@ class ShopResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('shop/'))
+                ->url(guard_url('shop/'.$shop->id))
                 ->redirect();
         }
     }

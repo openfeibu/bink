@@ -27,6 +27,26 @@
                             @endforeach
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">热门活动</label>
+                        <div class="layui-input-block">
+                            @foreach($activities as $key => $activity)
+                                <input type="checkbox" name="activities[]" value="{{ $activity->id }}" title="{{ $activity->name }}" >
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('shop.label.type') }}</label>
+                        <div class="layui-input-inline">
+                            <?php $i=1 ?>
+                            <select class="layui-select" name="type">
+                                @foreach(trans('shop.type') as $key => $type)
+                                <option value="{{ $key }}">{{ $type }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                    </div>
                     {!! Theme::widget('area')->render() !!}
 
                     <div class="layui-form-item shopAccout">

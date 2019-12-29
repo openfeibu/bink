@@ -16,8 +16,19 @@ class Shop extends AuthModel
 
     protected $config = 'model.shop.shop';
 
+    protected $appends = ['type_desc'];
+
     public function categories()
     {
         return $this->belongsToMany(config('model.shop.shop_category.model'))->withTimestamps();
+    }
+    public function activities()
+    {
+        return $this->belongsToMany(config('model.shop.shop_activity.model'))->withTimestamps();
+    }
+
+    public function getTypeDescAttribute()
+    {
+        return trans('shop.type.'.$this->attributes['type']);
     }
 }
