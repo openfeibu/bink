@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\City;
 use App\Models\Area;
 use App\Models\DistributorCity;
+use App\Models\ShopActivity;
+use App\Models\ShopCategory;
 
 class HomeController extends BaseController
 {
@@ -40,6 +42,10 @@ class HomeController extends BaseController
             ]);
         }
         $search_key = $request->input('search_key','');
+        $shop_type = $request->input('type','');
+        $activities = $request->input('activities',[]);
+        $categories = $request->input('categories',[]);
+
         $distributor_shop_ids = DistributorShop::where('distributor_id',$distributor_id)->pluck('shop_id')->toArray();
 
         $city_code = $request->input('city_code');
@@ -60,7 +66,7 @@ class HomeController extends BaseController
 
 
         if ($this->response->typeIs('json')) {
-            $shops = Shop::select(DB::raw("*,ROUND(  
+            $shops = Shop::select(DB::raw("shops.*,ROUND(  
                     6371.393 * 2 * ASIN(  
                         SQRT(  
                             POW(  
@@ -80,7 +86,9 @@ class HomeController extends BaseController
                             )  
                         )  
                     ) * 1000  
-                ) AS distance"))
+                ) AS distance,shop_shop_category.shop_category_id,shop_shop_activity.shop_activity_id"))
+                ->leftJoin('shop_shop_category','shops.id','=','shop_shop_category.shop_id')
+                ->leftJoin('shop_shop_activity','shops.id','=','shop_shop_activity.shop_id')
                 ->when($area,function ($query) use ($area) {
                     if($area->level_type == 1){
                         return $query->where('province_code', $area->code);
@@ -91,11 +99,18 @@ class HomeController extends BaseController
                     }
                 })->when($search_key,function ($query) use ($search_key) {
                     return $query->where('shop_name', 'like','%'.$search_key.'%');
+                })->when($shop_type,function ($query) use ($shop_type) {
+                    return $query->where('type', $shop_type);
+                })->when($categories,function ($query) use ($categories) {
+                    return $query->whereIn('shop_shop_category.shop_category_id', $categories);
+                })->when($activities,function ($query) use ($activities) {
+                    return $query->whereIn('shop_shop_activity.shop_activity_id', $activities);
                 })->when($distributor_id,function ($query) use ($distributor_shop_ids) {
                     return $query->whereIn('id', $distributor_shop_ids);
                 })
+                ->groupBy('shops.id')
                 ->orderBy('distance','asc')
-                ->orderBy('id','desc')
+                ->orderBy('shops.id','desc')
                 ->paginate(20);
 
 
@@ -111,8 +126,11 @@ class HomeController extends BaseController
                 ->data($shops_data)
                 ->output();
         }
+        $categories = ShopCategory::orderBy('id','asc')->get();
+        $activities = ShopActivity::orderBy('id','asc')->get();
+
         return $this->response->title('门店')
-            ->data(compact('city','search_key','city_code','distributor_id'))
+            ->data(compact('city','search_key','city_code','distributor_id','categories','activities'))
             ->view('shop.index')
             ->output();
 
