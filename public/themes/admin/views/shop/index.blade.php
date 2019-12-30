@@ -8,17 +8,28 @@
     <div class="main_full">
         {!! Theme::partial('message') !!}
         <div class="layui-col-md12">
-            <div class="tabel-message">
-                <div class="layui-inline tabel-btn">
-                    <button class="layui-btn layui-btn-warm "><a href="{{ url('/admin/shop/create') }}">添加{{ trans('shop.name') }}</a></button>
-                    <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">删除</button>
-                </div>
-                <div class="layui-inline">
-                   <input class="layui-input search_key" name="shop_name" placeholder="门店名称" autocomplete="off">
-                </div>
-                <button class="layui-btn" data-type="reload">搜索</button>
-            </div>
+            <form class="layui-form">
+                <div class="tabel-message">
+                    <div class="layui-inline tabel-btn">
+                        <button class="layui-btn layui-btn-warm "><a href="{{ url('/admin/shop/create') }}">添加{{ trans('shop.name') }}</a></button>
+                        <button class="layui-btn layui-btn-primary " data-type="del" data-events="del">删除</button>
+                    </div>
 
+                    {!! Theme::widget('area',['template' => 'search_area'])->render() !!}
+                    <div class="layui-input-inline">
+                        <select class="layui-select search_key" name="type">
+                            <option value="">{{ trans('shop.label.type') }}</option>
+                            @foreach(trans('shop.type') as $key => $type)
+                                <option value="{{ $key }}">{{ $type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                       <input class="layui-input search_key" name="shop_name" placeholder="门店名称" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" data-type="reload" type="button">搜索</button>
+                </div>
+            <form>
             <table id="fb-table" class="layui-table"  lay-filter="fb-table">
 
             </table>
@@ -52,6 +63,8 @@
                 ,{field:'business_time',title:'{{ trans('shop.label.business_time') }}'}
                 ,{field:'city_name',title:'{{ trans('shop.label.city_name') }}'}
                 ,{field:'view_count',title:'{{ trans('shop.label.view_count') }}'}
+                ,{field:'categories_name',title:'{{ trans('shop_category.name') }}'}
+                ,{field:'activities_name',title:'{{ trans('shop_activity.name') }}'}
                 ,{field:'created_at',title:'{{ trans('app.created_at') }}'}
                 ,{field:'score',title:'操作', width:200, align: 'right',toolbar:'#barDemo'}
             ]]

@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">分类</label>
+                        <label class="layui-form-label">{{ trans('shop_category.name') }}</label>
                         <div class="layui-input-block">
                             @foreach($categories as $key => $category)
                                 <input type="checkbox" name="categories[]" value="{{ $category->id }}" title="{{ $category->name }}" @if(in_array($category->id,$shop_category_ids) || $category->type == 'system') checked @endif >
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">热门活动</label>
+                        <label class="layui-form-label">{{ trans('shop_activity.name') }}</label>
                         <div class="layui-input-block">
                             @foreach($activities as $key => $activity)
                                 <input type="checkbox" name="activities[]" value="{{ $activity->id }}" title="{{ $activity->name }}" @if(in_array($activity->id,$shop_activity_ids)) checked @endif >
@@ -45,6 +45,13 @@
 
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('shop.label.tel') }}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tel" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('shop.label.tel') }}" class="layui-input" value="{{ $shop->tel }}">
+                        </div>
+                    </div>
+
                     {!! Theme::widget('area',['province_code' => $shop->province_code,'city_code' => $shop->city_code,'county_code' => $shop->county_code ])->render() !!}
 
                     <div class="layui-form-item shopAccout">

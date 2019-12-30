@@ -56,7 +56,8 @@
                 }
             });
         });
-        var $ = layui.$, active = {
+        var $ = layui.$;
+        active = {
             reload: function(){
                 var demoReload = $('#demoReload');
                 var where = {};

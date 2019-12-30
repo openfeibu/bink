@@ -10,11 +10,11 @@ use App\Traits\Filer\Filer;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class ShopShopCategory extends BaseModel
+class ReportCategory extends BaseModel
 {
     use Filer, Slugger, DateFormatter,LogsActivity;
 
-    protected $config = 'model.shop.shop_shop_category';
+    protected $config = 'model.shop.shop_report';
 
 
 }

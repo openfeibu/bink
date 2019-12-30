@@ -25,7 +25,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['shop_name','image', 'images','address', 'city_code', 'city_name', 'province_code', 'province_name', 'county_code', 'county_name','opening_time', 'closing_time', 'content', 'longitude', 'latitude','view_count','type', 'created_at', 'updated_at'],
+        'fillable'      => ['shop_name','image', 'images','address', 'city_code', 'city_name', 'province_code', 'province_name', 'county_code', 'county_name','opening_time', 'closing_time', 'content', 'longitude', 'latitude','view_count','type','tel', 'created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/shop',
@@ -36,6 +36,10 @@ return [
         'perPage'       => '20',
         'search'        => [
             'shop_name'        => 'like',
+            'province_code' => '=',
+            'city_code' => '=',
+            'county_code' => '=',
+            'type' => '=',
         ],
     ],
     'shop_category'     => [
@@ -71,7 +75,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['shop_id','category_id', 'created_at', 'updated_at'],
+        'fillable'      => ['shop_id','shop_category_id', 'created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/shop',
@@ -107,9 +111,9 @@ return [
             'shop_name'        => 'like',
         ],
     ],
-    'shop_shop_category'     => [
-        'model'         => \App\Models\ShopShopCategory::class,
-        'table'         => 'shop_shop_category',
+    'shop_shop_activity'     => [
+        'model'         => \App\Models\ShopShopActivity::class,
+        'table'         => 'shop_shop_activity',
         //'presenter'     => \Litepie\User\Repositories\Presenter\UserPresenter::class,
         'hidden'        => [],
         'visible'       => [],
@@ -117,7 +121,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['shop_id','category_id', 'created_at', 'updated_at'],
+        'fillable'      => ['shop_id','shop_activity_id', 'created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/shop',

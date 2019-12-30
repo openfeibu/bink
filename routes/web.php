@@ -43,6 +43,12 @@ Route::group([
     Route::resource('shop', 'ShopResourceController');
     Route::post('/shop/destroyAll', 'ShopResourceController@destroyAll')->name('shop.destroy_all');
 
+    Route::resource('shop_category', 'ShopCategoryResourceController');
+    Route::post('/shop_category/destroyAll', 'ShopCategoryResourceController@destroyAll')->name('shop_category.destroy_all');
+
+    Route::resource('shop_activity','ShopActivityResourceController');
+    Route::post('/shop_activity/destroyAll', 'ShopActivityResourceController@destroyAll')->name('shop_activity.destroy_all');
+
     Route::resource('distributor', 'DistributorResourceController');
     Route::post('/distributor/destroyAll', 'DistributorResourceController@destroyAll')->name('distributor.destroy_all');
 
@@ -100,7 +106,7 @@ Route::group([
     Route::get('/shop','ShopController@index')->name('shop.index');
     Route::get('/shop/{shop}','ShopController@show')->name('shop.show');
     Route::get('/report','ReportController@index')->name('report.index');
-
+    Route::post('/report/submit','ReportController@submitReport')->name('report.submit');
 });
 //Route::get('
 ///{slug}.html', 'PagePublicController@getPage');

@@ -61,6 +61,7 @@ class Area extends Widget {
         $country_id = $this->attributes['country_id'] ?? '';
         $province_id= $this->attributes['province_id'] ?? '';
         $city_id = $this->attributes['city_id'] ?? '';
+        $this->template = $this->attributes['template'] ?? $this->template;
 
         $provinces = app(AreaRepository::class)->getProvinces();
 

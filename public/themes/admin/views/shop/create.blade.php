@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">分类</label>
+                        <label class="layui-form-label">{{ trans('shop_category.name') }}</label>
                         <div class="layui-input-block">
                             <?php $i=1 ?>
                             @foreach($categories as $key => $category)
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">热门活动</label>
+                        <label class="layui-form-label">{{ trans('shop_activity.name') }}</label>
                         <div class="layui-input-block">
                             @foreach($activities as $key => $activity)
                                 <input type="checkbox" name="activities[]" value="{{ $activity->id }}" title="{{ $activity->name }}" >
@@ -47,6 +47,13 @@
 
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{{ trans('shop.label.tel') }}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tel" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('shop.label.tel') }}" class="layui-input" value="">
+                        </div>
+                    </div>
+
                     {!! Theme::widget('area')->render() !!}
 
                     <div class="layui-form-item shopAccout">

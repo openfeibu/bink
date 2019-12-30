@@ -15,6 +15,7 @@ return [
         'business_time' => '营业时间',
         'view_count' => '浏览数',
         'type' => '类型',
+        'tel' => '电话'
 
     ],
     'type' => [

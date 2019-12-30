@@ -112,4 +112,5 @@ return [
     'select_province' => '请选择省',
     'select_city' => '请选择市',
     'select_county' => '请选择区',
+    'please_select' => '请选择',
 ];
