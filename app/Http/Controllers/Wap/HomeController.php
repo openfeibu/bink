@@ -115,8 +115,8 @@ class HomeController extends BaseController
 
             foreach ($shops as $key => $shop)
             {
-                $shop->activities = $shop->activities;
-                $shop->categories = $shop->categories;
+                $shop->activities = $shop->activities->pluck('name');
+                $shop->categories = $shop->categories->pluck('name');
             }
 
             $shops_data = $shops->toArray()['data'];
