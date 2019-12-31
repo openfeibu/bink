@@ -32,6 +32,7 @@ class UserController extends BaseController
 		$city_name = $data['result']['address_component']['city'];
 		//$city = City::where('name',$city_name)->first();
         $city = Area::where('name',$city_name)->where('level_type',2)->first();
+        $province = Area::where('code',$city->parent_code)->where('level_type',1)->first();
 		if(!$user->latitude)
 		{
 			$first = true;
@@ -58,6 +59,7 @@ class UserController extends BaseController
 			->data([
 				'first' => $first,
                 'city_code' => $city->code,
+                'location' => $province->name.'，'.$city->name,
 			])
 			->output();
 	}
