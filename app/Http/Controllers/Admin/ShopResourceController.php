@@ -89,6 +89,7 @@ class ShopResourceController extends BaseController
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
                 'type' => $attributes['type'],
+                'tel' => $attributes['tel'],
             ];
 
             $shop = $this->repository->create($data);
@@ -156,6 +157,7 @@ class ShopResourceController extends BaseController
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
                 'type' => $attributes['type'],
+                'tel' => $attributes['tel'],
             ];
 
             $shop->update($data);
