@@ -113,6 +113,11 @@ class HomeController extends BaseController
                 ->orderBy('shops.id','desc')
                 ->paginate(20);
 
+            foreach ($shops as $key => $shop)
+            {
+                $shop->activities = $shop->activities;
+                $shop->categories = $shop->categories;
+            }
 
             $shops_data = $shops->toArray()['data'];
 

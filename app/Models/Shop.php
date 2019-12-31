@@ -20,11 +20,11 @@ class Shop extends BaseModel
 
     public function categories()
     {
-        return $this->belongsToMany(config('model.shop.shop_category.model'))->withTimestamps();
+        return $this->belongsToMany(config('model.shop.shop_category.model'));
     }
     public function activities()
     {
-        return $this->belongsToMany(config('model.shop.shop_activity.model'))->withTimestamps();
+        return $this->belongsToMany(config('model.shop.shop_activity.model'));
     }
 
     public function getTypeDescAttribute()
