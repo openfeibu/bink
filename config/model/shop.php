@@ -36,9 +36,9 @@ return [
         'perPage'       => '20',
         'search'        => [
             'shop_name'        => 'like',
-            'province_code' => '=',
-            'city_code' => '=',
-            'county_code' => '=',
+//            'province_code' => '=',
+//            'city_code' => '=',
+//            'county_code' => '=',
             'type' => '=',
         ],
     ],
