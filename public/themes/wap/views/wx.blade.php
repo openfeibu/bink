@@ -1,6 +1,6 @@
 
 	var shareLinkUlr = location.href.split("#")[0];
-    var city_code;
+ 
         $.get("{{ url('/wechat/jssdkconfig') }}",{'apis':"updateAppMessageShareData,updateTimelineShareData,openLocation,getLocation",'url':shareLinkUlr,'debug':false,'json':false},function(data,status){
             configJsSDK(JSON.parse(data.data.config))
         },'json');
@@ -27,7 +27,9 @@
 									$fb.fbNews({content:msg,type:'warning'});
 								}
                                 city_code = data.data.city_code
-                                ajaxList();
+								$("#getArea").val(location)
+								$(".header .map span").text(location)
+                                ajaxList(city_code);
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
 								responseText = $.parseJSON(jqXHR.responseText);

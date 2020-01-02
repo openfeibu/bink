@@ -661,7 +661,7 @@ width:100%;height:100%;top:0;left:0;opacity:0;z-index:10
 	margin-left:0.2rem;
 }
 .screening.active{background: url(../images/tag2.png) no-repeat 90% center / 0.2rem auto;}
-.screening.checked{background:#ec6300 url(../images/tag.png) no-repeat 90% center / 0.2rem auto;color:#fff;}
+.screening.checked{background:#ec6300 url(../images/tag3.png) no-repeat 90% center / 0.2rem auto;color:#fff;border:1px solid #ec6300}
 .list-switch{
 	height: 0.45rem;
     width:0.58rem;
@@ -773,3 +773,82 @@ width:100%;height:100%;top:0;left:0;opacity:0;z-index:10
 #slideUp-container .shopList-item{padding-top:0;padding-bottom:0.1rem}
 .container-map .back{position:fixed;width:1rem;height:1rem;top:0.2rem;left:0.2rem;background:url(../images/back.png) no-repeat center /100% 100%;z-index:10}
 .report-error{height:0.8rem;line-height:0.8rem;color:#2d7bff;background:url("../images/cuowu.png") no-repeat 0.3rem center/auto 0.4rem;padding-left:0.8rem;font-size:0.28rem;border-top:1px solid #eee;}
+
+
+/* 门店报错 */
+.nav-bar{height:1rem;background:#ec6300;line-height:1rem;text-align:center;color:#fff;font-size:0.32rem}
+.returnLoca{width:1rem;height:1rem;background:url(../images/back.png) no-repeat center /80% 80%;position:absolute;left:0;top:0}
+.wrapper-report{background:#fff;}
+.wrapper-report .title {
+    color: #333;
+    font-size: 0.36rem;
+    font-weight: 900;
+    padding-bottom: 0.2rem;
+    padding-left: 0.2rem;
+    margin-top: 0.8rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+.wrapper-report .form{padding-left:0.2rem;}
+.wrapper-report .form-item {
+    padding: 0.2rem 0 0.2rem 0.8rem ;
+    border-bottom: 1px solid #e5e5e5;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+	background:url("../images/uncheck.png") no-repeat 0.2rem  center/0.4rem auto
+}
+.wrapper-report .form-item.active {
+    
+	background:url("../images/checked.png") no-repeat 0.2rem  center/0.4rem auto
+}
+.wrapper-report .form-item .sub_title {
+    color: #000;
+    font-size: 0.32rem;
+    font-weight: 900;
+}
+.wrapper-report .form-item .tip{
+	color:#000;font-size:0.26rem
+}
+.wrapper-report .title_2 {
+    color: #333;
+    font-size: 0.36rem;
+    font-weight: 900;
+    padding-bottom: 0.2rem;
+    padding-left: 0.2rem;
+    margin-top: 0.8rem;
+    
+}
+.wrapper-report input {
+    width: 100%;
+    font-size: 0.3rem;
+	border:none;
+    border-bottom: 1px solid #e5e5e5;
+    margin-top: 0.4rem;
+    padding: 0.2rem;
+    padding-top: 0;
+	
+}
+.wrapper-report textarea {
+   
+    height: 1.5rem;
+    border: 1px solid #e5e5e5;
+    resize: none;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.28rem;
+    width: 6rem;
+    margin-top:0.2rem
+}
+.wrapper-report .submit {
+    color: #fff;
+    font-size: 0.32rem;
+    width: 7rem;
+    height: 1rem;
+    background: #ec6300;
+    font-weight: 900;
+	margin:0.4rem auto;
+	border:none;
+ 
+}

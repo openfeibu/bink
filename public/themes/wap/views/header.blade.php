@@ -11,7 +11,7 @@
 
 				$(function(){
 					$('#getArea').getArea({
-						defaultArea: [18, 2, 3],
+						defaultArea: [18, 2, 0],
 						inpEle: '#getArea',
 						normalArea: true
 					});
@@ -38,13 +38,15 @@
 	<div class="filter-box">
 		<div class="filters">
 			<p class="line line_title">售卖产品：</p>
-			<ul class="line">
-				<li class="default active" >套装 / 替换弹 / 小冰壳等</li>
-				<li class="">一次性小冰壳</li>
+			<ul class="line" id="categories">
+				<li class="default" >Max套装/替换弹/一次性</li>
+				<li class="" tid="1">一次性小冰壳</li>
+				<li class="" tid="2">一次性小冰壳2</li>
 			</ul>
 			<p class="line line_title">热门活动：</p>
-			<ul class="line">
-				<li class="">神秘烟弹活动</li>
+			<ul class="line" id="activities">
+				<li class="" tid="3">神秘烟弹活动</li>
+				<li class="" tid="4">神秘烟弹活动2</li>
 			</ul>
 		</div>
 		<div class="btn-group">

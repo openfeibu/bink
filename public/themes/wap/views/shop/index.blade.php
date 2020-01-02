@@ -4,7 +4,8 @@
 <div class="main">
   
     <div class="noShop" style="display:none;">
-        <span>没有相关的店铺</span>
+        <span>该地区未能搜索到BINK门店。</span>
+		
     </div>
     
 
@@ -35,7 +36,7 @@
 				</div>
 				<div class="tags fb-float-left"><span>神秘烟弹活动</span></div>
 			</div>
-			<a href="/report"><div class="report-error">门店信息错误？报告此门店错误</div></a>
+			<a class="reportUrl" href="/report"><div class="report-error">门店信息错误？报告此门店错误</div></a>
 		</div>
 </div>
 </div>
@@ -56,8 +57,12 @@
 	var markersArray=[]; //标志数组
 	var checkedMarker=null; //标志数组
 	var page = 0 ;
+	var categories=[];//售卖产品
+	var activities=[];//热门活动
+	var type='';//exclusive'专卖店
+	var city_code='';
 	@include('wx');
-   
+	
     //初始化地图函数  自定义函数名init
     function init() {
         //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
@@ -86,19 +91,22 @@
 		  var h = $(".shopList").height();
 		  var ah = $(".shopList-box").height();
 		  if(h+scrollTop+30 >= ah){
-				ajaxList();
+				ajaxList(city_code);
 
 		  }
 
 		}
 		ajaxList();	
-		function ajaxList(city_code) {
+		function ajaxList(code) {
+			city_code = code;
+			
+			$(".noShop").fadeOut(200);
 				$(".loading").fadeIn(100);
 				loading = false;
                 page++;
                 $.ajax({
                     url : "{{ route('wap.home') }}",
-                    data : {'page':page,'city_code':city_code,'distributor_id':"{{ $distributor_id }}"},
+                    data : {'page':page,'city_code':city_code,'categories':categories,'activities':activities,'type':type,'distributor_id':"{{ $distributor_id }}"},
                     type : 'get',
                     dataType : "json",
                     success : function (data) {
@@ -133,20 +141,54 @@
 							for(var i = 0,c=data.length;i < c ; i++){
 								var v = data[i];
 								console.log(v)
-								html+=' <div class="shopList-item clearfix">'+
+								if(v.type=="exclusive"){
+									//专卖店
+									html+=' <div class="shopList-item clearfix">'+
 									'<div class="test">'+
 										'<div class="type"><img src="{!! theme_asset('images/zmd.png') !!}" alt=""/></div>'+
 										'<div class="name fb-overflow-1">'+v.shop_name+'</div>'+
 										'<div class="map  fb-overflow-2">'+v.address+'</div>'+
 										'<div class="date">营业时间：'+v.opening_time+' - '+v.closing_time+'</div>'+
-									'</div>'+
-									'<div class="mapNav">'+
-										'<div class="distance">'+v.distance+'km</div>'+
-										'<div class="mapNav-icon" tid="'+v.id+'"></div>'+
-										'<a class="tell-icon" href="tel:'+v.shop_name+'"></a>'+
-									'</div>'+
-									'<div class="tags fb-float-left"><span>'+v.shop_name+'</span></div>'+
-								'</div>';
+									'</div>';
+								}else{
+									//授权店
+									html+=' <div class="shopList-item clearfix">'+
+									'<div class="test">'+
+										'<div class="type"><img src="{!! theme_asset('images/sqd.png') !!}" alt=""/></div>'+
+										'<div class="name fb-overflow-1">'+v.shop_name+'</div>'+
+										'<div class="map  fb-overflow-2">'+v.address+'</div>'+
+										'<div class="date">营业时间：'+v.opening_time+' - '+v.closing_time+'</div>'+
+									'</div>';
+								}
+								if(v.tel.length == 0){
+									//没有电话
+									html+='<div class="mapNav">'+
+												'<div class="distance">'+v.distance+'km</div>'+
+												'<div class="mapNav-icon" tid="'+v.id+'"></div>'+
+											'</div>';
+								}else{
+									//有电话
+									html+='<div class="mapNav">'+
+												'<div class="distance">'+v.distance+'km</div>'+
+												'<div class="mapNav-icon" tid="'+v.id+'"></div>'+
+												'<a class="tell-icon" href="tel:'+v.tel+'"></a>'+
+											'</div>';
+								}
+								if(v.activities_name.length == 0){
+									//没有活动
+									html+='</div>';
+								}else{
+									//有活动
+									html+='<div class="tags fb-float-left">';
+									for(var h = 0; h < v.activities_name.length ; h++){
+										html+='<span>'+v.activities_name[h]+'</span>'
+										
+									}
+									html +='</div></div>';
+								}
+								
+							
+								
 								coordinatesList.push({id:v.id,center:new qq.maps.LatLng(v.latitude,v.longitude)})
 								markersList[v.id] = v;
 								//计算最佳视野
@@ -201,33 +243,21 @@
 			$(".container-map").css({"z-index":'11',"opacity":"1"});
 			}
 		})
+		//切换店铺类型
 		$(".onlyShop").on("click",function(){
 			if($(this).hasClass("active")){
 				$(this).removeClass("active")
+				type="";
 			}else{
 				$(this).addClass("active")
+				type="exclusive";
+
 			}
+			resetList();
+		
+			ajaxList(city_code);
 		})
-		//打开筛选
-		$(".screening").on("click",function(){
-			if($(this).hasClass("active")){
-				$(this).removeClass("active");
-				$(".filter").hide();
-				$(".filter-box").css("top","-50%")
-			}else{
-				$(this).addClass("active");
-				$(".filter").show();
-				setTimeout(function(){
-					$(".filter-box").css("top","3.5rem")
-				},10)
-			}
-			
-		})
-		$(".filter-bg").on("click",function(){
-			$(".screening").removeClass("active");
-			$(".filter").hide();
-			$(".filter-box").css("top","-50%")
-		})
+		
 		$("#slideUp-container .tag").on("click",function(){
 			$("#slideUp-container").css("bottom","-100%")
 		})
@@ -253,7 +283,24 @@
 						console.log(info)
 						$("#slideUp-container").css("bottom",0);
 						$("#slideUp-container .shopList-item").find(".name").text(info.shop_name).end().find(".map").text(info.address).end().find(".date").text(info.opening_time+'-'+info.closing_time);
-
+						$(".reportUrl").attr("href","/report?id="+info.id);
+						if(info.tel.length == 0){
+							$(".tell-icon").hide();
+						}else{
+							$(".tell-icon").show().attr("href","tel:"+info.tel);	
+						}
+						if(info.activities_name.length == 0){
+							//没有活动
+							$("#slideUp-container .shopList-item").find(".tags").hide();
+						}else{
+							//有活动
+							var html = '';
+							for(var h = 0; h < info.activities_name.length ; h++){
+								html+='<span>'+info.activities_name[h]+'</span>'
+								
+							}
+							$("#slideUp-container .shopList-item").find(".tags").show().html(html);
+						}
 						marker.setIcon(icon2)
 						preMarker = marker;
 					});
@@ -292,11 +339,34 @@
 				markersArray.length = 0;
 			}
 		}
+		//点击导航
 		$(".shopList").on("click",".shopList-item .mapNav-icon",function(){
+			if(preMarker){
+				preMarker.setIcon(icon)
+			}
 			clearOverlays();
 			var tid = $(this).attr("tid");
 			var info = markersList[tid];
-			$("#slideUp-container .shopList-item").find(".name").text(info.shop_name).end().find(".map").text(info.address).end().find(".date").text(info.opening_time+'-'+info.closing_time).end().find(".mapNav-icon").attr("tid",info.id);
+			$("#slideUp-container .shopList-item").find(".name").text(info.shop_name).end().find(".map").text(info.address).end().find(".date").text(info.opening_time+'-'+info.closing_time).end().find(".mapNav-icon").attr("tid",info.id)
+			$(".reportUrl").attr("href","/report?id="+tid);
+			if(info.tel.length == 0){
+				$(".tell-icon").hide();
+			}else{
+				$(".tell-icon").show().attr("href","tel:"+info.tel);	
+			}
+			console.log(info.activities_name)
+			if(info.activities_name.length == 0){
+				//没有活动
+				$("#slideUp-container .shopList-item").find(".tags").hide();
+			}else{
+				//有活动
+				var html = '';
+				for(var h = 0; h < info.activities_name.length ; h++){
+					html+='<span>'+info.activities_name[h]+'</span>'
+					
+				}
+				$("#slideUp-container .shopList-item").find(".tags").show().html(html);
+			}
 			map.setCenter(new qq.maps.LatLng(info.latitude,info.longitude))
 			var marker = new qq.maps.Marker({
 				icon:icon2,
@@ -339,14 +409,81 @@
 			showOverlays();
 			checkedMarker.setMap(null);
 		})
-		//选择筛选
-		$(".filters ul").on("click","li",function(){
-			$(this).toggleClass("active")
+		
+		
+		//打开筛选
+		$(".screening").on("click",function(){
+			if($(this).hasClass("active")){
+				
+				$(this).removeClass("active");
+				$(".filter").hide();
+				$(".filter-box").css("top","-50%")
+			}else{
+				$(this).addClass("active");
+				$(".filter").show();
+				setTimeout(function(){
+					$(".filter-box").css("top","3.5rem")
+				},10)
+			}
+			
 		})
-		//重置数据
+		$(".filter-bg").on("click",function(){
+			checkScreen();
+			resetList();
+			ajaxList(city_code);
+		})
+		//选择筛选
+		$("#categories,#activities").on("click","li",function(){
+			if($(this).hasClass("default")){
+				return false;
+			}
+			$(this).toggleClass("active");
+		})
+	
+		//确定筛选
+		$(".filter .submit").on("click",function(){
+			checkScreen();
+			resetList();
+			ajaxList(city_code);
+		})
+		function checkScreen(){
+			categories=[];
+			for(var i= 0;i<$("#categories li").length;i++){
+				if($("#categories li").eq(i).hasClass("active")){
+					var val = $("#categories li").eq(i).attr("tid");
+					categories.push(val)
+				}
+			}
+			activities=[];
+			for(var i= 0;i<$("#activities li").length;i++){
+				if($("#activities li").eq(i).hasClass("active")){
+					var val = $("#activities li").eq(i).attr("tid");
+					activities.push(val)
+				}
+			}
+			$(".screening").removeClass("active");
+			$(".filter").hide();
+			$(".filter-box").css("top","-50%");
+			if(categories.length !=0 || activities.length !=0){
+				$(".screening").addClass("checked")
+			}else{
+				$(".screening").removeClass("checked")
+			}
+		}
+		//重置筛选数据
+		$(".filter .reset").on("click",function(){
+			
+			$("#activities li,#categories li").removeClass("active");
+			$(".screening").removeClass("checked")
+			
+			
+		})
+		//重置列表数据
 		function resetList(){
 			deleteOverlays();
 			page = 0;
+			coordinatesList=[];
+			maxlat=minlat=maxlong=minlong=0;
 		}
 		
 </script>

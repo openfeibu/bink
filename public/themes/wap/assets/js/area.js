@@ -58,6 +58,7 @@
             // 获取json数据 呼出弹窗
             $(this).on(params.eventInpFocus, function () {
                 $.getJSON(params.jsonUrl, function(data){
+					params.jsonData = data;
                     $('.area-province-scroll').empty();
                     params.areaData = data[0];
 					
