@@ -39,14 +39,15 @@
 		<div class="filters">
 			<p class="line line_title">售卖产品：</p>
 			<ul class="line" id="categories">
-				<li class="default" >Max套装/替换弹/一次性</li>
-				<li class="" tid="1">一次性小冰壳</li>
-				<li class="" tid="2">一次性小冰壳2</li>
+				@foreach($categories as $key => $category)
+					<li class="" tid="{{ $category['id'] }}">{{ $category['name'] }}</li>
+				@endforeach
 			</ul>
 			<p class="line line_title">热门活动：</p>
 			<ul class="line" id="activities">
-				<li class="" tid="3">神秘烟弹活动</li>
-				<li class="" tid="4">神秘烟弹活动2</li>
+				@foreach($activities as $key => $activity)
+					<li class="" tid="{{ $activity['id'] }}">{{ $activity['name'] }}</li>
+				@endforeach
 			</ul>
 		</div>
 		<div class="btn-group">
