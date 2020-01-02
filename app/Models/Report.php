@@ -20,4 +20,12 @@ class Report extends BaseModel
     {
         return $this->belongsToMany(config('model.report.report_category.model'))->withTimestamps();
     }
+    public function user()
+    {
+        return $this->belongsTo(config('model.user.user.model.model'));
+    }
+    public function shop()
+    {
+        return $this->belongsTo(config('model.shop.shop.model'));
+    }
 }
