@@ -14,7 +14,7 @@ class ReportCategory extends BaseModel
 {
     use Filer, Slugger, DateFormatter,LogsActivity;
 
-    protected $config = 'model.shop.shop_report';
+    protected $config = 'model.report.report_category';
 
 
 }
