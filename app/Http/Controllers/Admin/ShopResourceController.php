@@ -33,10 +33,18 @@ class ShopResourceController extends BaseController
     }
     public function index(Request $request){
         $limit = $request->input('limit',config('app.limit'));
-
+        $search = $request->input('search',[]);
         if ($this->response->typeIs('json')) {
-            $data = $this->repository
-                ->setPresenter(\App\Repositories\Presenter\ShopListPresenter::class)
+            $data = $this->repository;
+            if(isset($search['county_code']) && $search['county_code'])
+            {
+                $data = $data->where('county_code',$search['county_code']);
+            }else if(isset($search['city_code']) && $search['city_code']){
+                $data = $data->where('city_code',$search['city_code']);
+            }else if(isset($search['province_code']) && $search['province_code']){
+                $data = $data->where('province_code',$search['province_code']);
+            }
+            $data = $data->setPresenter(\App\Repositories\Presenter\ShopListPresenter::class)
                 ->orderBy('id','desc')
                 ->getDataTable($limit);
 
@@ -89,7 +97,7 @@ class ShopResourceController extends BaseController
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
                 'type' => $attributes['type'],
-                'tel' => $attributes['tel'],
+                'tel' => $attributes['tel'] ?? '',
             ];
 
             $shop = $this->repository->create($data);
@@ -157,7 +165,7 @@ class ShopResourceController extends BaseController
                 'latitude' => $attributes['latitude'],
                 'images' => isset($attributes['images']) ? implode(',',$attributes['images']) : '',
                 'type' => $attributes['type'],
-                'tel' => $attributes['tel'],
+                'tel' => $attributes['tel'] ?? '',
             ];
 
             $shop->update($data);

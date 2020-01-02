@@ -48,25 +48,13 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('shop.label.tel') }}</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="tel" lay-verify="required" autocomplete="off" placeholder="请输入{{ trans('shop.label.tel') }}" class="layui-input" value="{{ $shop->tel }}">
+                            <input type="text" name="tel" autocomplete="off" placeholder="请输入{{ trans('shop.label.tel') }}" class="layui-input" value="{{ $shop->tel }}">
                         </div>
                     </div>
 
                     {!! Theme::widget('area',['province_code' => $shop->province_code,'city_code' => $shop->city_code,'county_code' => $shop->county_code ])->render() !!}
 
-                    <div class="layui-form-item shopAccout">
-                        <label class="layui-form-label">店铺头像（100*100）</label>
-                        {!! $shop->files('image')
-                        ->url($shop->getUploadUrl('image'))
-                        ->uploader()!!}
-                    </div>
 
-                    <div class="layui-form-item shopBanner">
-                        <label class="layui-form-label">轮播图(750*375)</label>
-                        {!! $shop->files('images',true)
-                        ->url($shop->getUploadUrl('images'))
-                        ->uploaders()!!}
-                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">{{ trans('shop.label.business_time') }}</label>
                         <div class="layui-input-inline">
