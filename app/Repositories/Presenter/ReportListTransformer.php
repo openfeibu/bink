@@ -12,8 +12,8 @@ class ReportListTransformer extends TransformerAbstract
         return [
             'id'                => $report->id,
             'user_name'         => $report->user->name,
-            'shop_id'         => $report->shop->id,
-            'shop_name'         => $report->shop->shop_name,
+            'shop_id'           => $report->shop->id,
+            'shop_name'         => $report->shop ? $report->shop->shop_name : '已删除',
             'tel'               => $report->tel,
             'content'             => $report->content,
             'categories_name' => implode('、',$report->categories->pluck('name')->toArray()),
