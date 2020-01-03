@@ -25,6 +25,7 @@
 			 <div class="shopList-item clearfix">
 				<div class="test">
 					<div class="type"><img src="{!! theme_asset('images/zmd.png') !!}" alt=""/></div>
+					<div class="type"><img src="{!! theme_asset('images/sqd.png') !!}" alt=""/></div>
 					<div class="name fb-overflow-1"></div>
 					<div class="map  fb-overflow-2"></div>
 					<div class="date">营业时间：</div>
@@ -284,6 +285,14 @@
 						$("#slideUp-container").css("bottom",0);
 						$("#slideUp-container .shopList-item").find(".name").text(info.shop_name).end().find(".map").text(info.address).end().find(".date").text(info.opening_time+'-'+info.closing_time);
 						$(".reportUrl").attr("href","/report?id="+info.id);
+						$("#slideUp-container .shopList-item").find(".type").hide();
+						if(info.type =="exclusive"){
+							//zhuanmai
+							
+							$("#slideUp-container .shopList-item").find(".type").eq(0).show();
+						}else{
+							$("#slideUp-container .shopList-item").find(".type").eq(1).show();
+						}
 						if(info.tel.length == 0){
 							$(".tell-icon").hide();
 						}else{
@@ -349,6 +358,14 @@
 			var info = markersList[tid];
 			$("#slideUp-container .shopList-item").find(".name").text(info.shop_name).end().find(".map").text(info.address).end().find(".date").text(info.opening_time+'-'+info.closing_time).end().find(".mapNav-icon").attr("tid",info.id)
 			$(".reportUrl").attr("href","/report?id="+tid);
+			$("#slideUp-container .shopList-item").find(".type").hide();
+			if(info.type =="exclusive"){
+				//zhuanmai
+				
+				$("#slideUp-container .shopList-item").find(".type").eq(0).show();
+			}else{
+				$("#slideUp-container .shopList-item").find(".type").eq(1).show();
+			}
 			if(info.tel.length == 0){
 				$(".tell-icon").hide();
 			}else{
