@@ -67,6 +67,7 @@ Route::group([
     Route::get('/area/list', 'AreaResourceController@getList')->name('area.list');
 
     Route::resource('report', 'ReportResourceController');
+    Route::post('/report/destroyAll', 'ReportResourceController@destroyAll')->name('report.destroy_all');
 
     Route::post('/upload/{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
 

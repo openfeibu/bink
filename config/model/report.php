@@ -25,7 +25,7 @@ return [
         'slugs'         => [],
         'dates'         => ['created_at', 'updated_at'],
         'appends'       => [],
-        'fillable'      => ['tel','user_id', 'shop_id','content', 'created_at', 'updated_at'],
+        'fillable'      => ['tel','user_id', 'shop_id','shop_name','content', 'created_at', 'updated_at'],
         'translate'     => [],
 
         'upload_folder' => '/report',
