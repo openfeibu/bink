@@ -349,7 +349,7 @@
 			}
 		}
 		//点击导航
-		$(".shopList").on("click",".shopList-item .mapNav-icon",function(){
+		$(".shopList").on("click",".shopList .shopList-item .mapNav-icon",function(){
 			if(preMarker){
 				preMarker.setIcon(icon)
 			}
