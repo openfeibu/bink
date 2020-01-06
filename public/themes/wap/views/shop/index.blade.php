@@ -97,7 +97,7 @@
 		  }
 
 		}
-		ajaxList();	
+	
 		function ajaxList(code) {
 			city_code = code;
 			
