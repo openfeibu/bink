@@ -27,7 +27,7 @@
 									$fb.fbNews({content:msg,type:'warning'});
 								}
                                 city_code = data.data.city_code
-								$("#getArea").val(location)
+								$("#getArea").val(data.data.location)
 								$(".header .map span").text(data.data.location)
                                 ajaxList(city_code);
 							},
