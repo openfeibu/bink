@@ -28,7 +28,7 @@
 								}
                                 city_code = data.data.city_code
 								$("#getArea").val(location)
-								$(".header .map span").text(location)
+								$(".header .map span").text(data.data.location)
                                 ajaxList(city_code);
 							},
 							error : function (jqXHR, textStatus, errorThrown) {
