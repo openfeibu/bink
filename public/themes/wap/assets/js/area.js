@@ -126,6 +126,7 @@
                 }
                 params.startY = e.originalEvent.changedTouches[0].pageY;
                 params.oldTop = Number($this.css('top').split('p')[0]);
+				  e.preventDefault();
             });
             // 手指滑动
             $(params.elePage).on('touchmove', params.scrollItem, function (e) {

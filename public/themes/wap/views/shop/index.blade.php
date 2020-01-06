@@ -315,7 +315,7 @@
 					});
 				})(i);
 			}
-				map.setZoom(14)
+				map.setZoom(14);
 				map.setCenter(new qq.maps.LatLng((maxlat+minlat)/2,(maxlong+minlong)/2))
 		}
 		//隐藏标记
