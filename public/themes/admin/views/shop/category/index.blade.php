@@ -31,9 +31,10 @@
     var main_url = "{{guard_url('shop_category')}}";
     var delete_all_url = "{{guard_url('shop_category/destroyAll')}}";
 
-    layui.use(['element','table'], function(){
+    layui.use(['jquery','element','table'], function(){
         var table = layui.table;
         var form = layui.form;
+        var $ = layui.$;
         table.render({
             elem: '#fb-table'
             ,url: main_url
